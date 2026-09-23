@@ -1,25 +1,23 @@
-/**
- * Intelligent Skill Gap Analyzer - Client Controller
- * Manages API communications, Chart.js radar visualizations,
- * What-If live score simulator, and phased learning roadmap rendering.
- */
 
-// Application State
+
 const state = {
   analysisData: null,
   radarChart: null,
+  demandChart: null,
+  activeDemandSkill: 'Python',
+  demandCache: {},
   simulatedSkills: new Set(),
   currentTab: 'all',
   theme: localStorage.getItem('intelligap-theme') || 'dark',
 };
 
-// DOM Element References
+
 const elements = {
   themeToggleBtn: document.getElementById('themeToggleBtn'),
   presetSelect: document.getElementById('presetSelect'),
   resetAppBtn: document.getElementById('resetAppBtn'),
-  
-  // Inputs
+
+
   resumeTextInput: document.getElementById('resumeTextInput'),
   resumeCharCount: document.getElementById('resumeCharCount'),
   clearResumeBtn: document.getElementById('clearResumeBtn'),
@@ -27,7 +25,7 @@ const elements = {
   dropzone: document.getElementById('dropzone'),
   dropzoneText: document.getElementById('dropzoneText'),
 
-  // CV Special Section Elements
+
   cvTabUpload: document.getElementById('cvTabUpload'),
   cvTabPaste: document.getElementById('cvTabPaste'),
   cvUploadPane: document.getElementById('cvUploadPane'),
@@ -41,23 +39,32 @@ const elements = {
   parsedSkillsChips: document.getElementById('parsedSkillsChips'),
   toggleRawExtractedBtn: document.getElementById('toggleRawExtractedBtn'),
   thunderboltCanvas: document.getElementById('thunderboltCanvas'),
-  
+
   jobTitleInput: document.getElementById('jobTitleInput'),
   jobTextInput: document.getElementById('jobTextInput'),
   jobCharCount: document.getElementById('jobCharCount'),
   clearJobBtn: document.getElementById('clearJobBtn'),
-  
+
   analyzeBtn: document.getElementById('analyzeBtn'),
   analyzeSpinner: document.getElementById('analyzeSpinner'),
-  
-  // Dashboard Elements
+
+  // Realistic Scanning Modal Elements
+  scanModal: document.getElementById('scanModal'),
+  scanModalTitle: document.getElementById('scanModalTitle'),
+  scanModalSubtitle: document.getElementById('scanModalSubtitle'),
+  scanProgressFill: document.getElementById('scanProgressFill'),
+  scanStepLabel: document.getElementById('scanStepLabel'),
+  scanPercentLabel: document.getElementById('scanPercentLabel'),
+  scanLogBody: document.getElementById('scanLogBody'),
+
+
   dashboardSection: document.getElementById('dashboardSection'),
   resultsRoleTitle: document.getElementById('resultsRoleTitle'),
   candidateGreeting: document.getElementById('candidateGreeting'),
   exportMarkdownBtn: document.getElementById('exportMarkdownBtn'),
   printReportBtn: document.getElementById('printReportBtn'),
-  
-  // KPI Metrics
+
+
   scoreCircle: document.getElementById('scoreCircle'),
   matchScoreVal: document.getElementById('matchScoreVal'),
   readinessBadge: document.getElementById('readinessBadge'),
@@ -69,35 +76,47 @@ const elements = {
   totalHoursVal: document.getElementById('totalHoursVal'),
   strategicAdviceText: document.getElementById('strategicAdviceText'),
   quickTipText: document.getElementById('quickTipText'),
-  
-  // Visualizations & Simulator
+
+
   radarCanvas: document.getElementById('radarChart'),
   simChipsContainer: document.getElementById('simChipsContainer'),
   simProjectedScore: document.getElementById('simProjectedScore'),
   simScoreDelta: document.getElementById('simScoreDelta'),
   resetSimBtn: document.getElementById('resetSimBtn'),
-  
-  // Matrix
+
+  // 2008-2026 Skill Demand Trajectory Elements
+  demandTrajectoryCard: document.getElementById('demandTrajectoryCard'),
+  customSkillSearchInput: document.getElementById('customSkillSearchInput'),
+  trackCustomSkillBtn: document.getElementById('trackCustomSkillBtn'),
+  demandQuickPills: document.getElementById('demandQuickPills'),
+  demandLineCanvas: document.getElementById('demandLineChart'),
+  demandMetaSkillName: document.getElementById('demandMetaSkillName'),
+  demandMetaStatus: document.getElementById('demandMetaStatus'),
+  demandMetaCurrentScore: document.getElementById('demandMetaCurrentScore'),
+  demandMetaPeakYear: document.getElementById('demandMetaPeakYear'),
+  demandMetaGrowth: document.getElementById('demandMetaGrowth'),
+  demandMetaInsight: document.getElementById('demandMetaInsight'),
+  demandMetaMilestone: document.getElementById('demandMetaMilestone'),
+
+
   matrixTabs: document.getElementById('matrixTabs'),
   matrixGrid: document.getElementById('matrixGrid'),
   tabCritCount: document.getElementById('tabCritCount'),
   tabSecCount: document.getElementById('tabSecCount'),
   tabMatchCount: document.getElementById('tabMatchCount'),
   tabExtraCount: document.getElementById('tabExtraCount'),
-  
-  // Roadmap
+
+
   timelineContainer: document.getElementById('timelineContainer'),
   capstoneTitle: document.getElementById('capstoneTitle'),
   capstoneDesc: document.getElementById('capstoneDesc'),
   capstoneDeliverablesList: document.getElementById('capstoneDeliverablesList'),
-  
-  // Toast
+
+
   toastContainer: document.getElementById('toastContainer')
 };
 
-// ==========================================================================
-// Initialization
-// ==========================================================================
+
 document.addEventListener('DOMContentLoaded', () => {
   applyTheme(state.theme);
   initThunderboltBackground();
@@ -105,33 +124,34 @@ document.addEventListener('DOMContentLoaded', () => {
   setupCvIntakeTabs();
   setupCharCounters();
   setupDropzone();
-  
-  // Pre-load initial demo preset if empty
+
+
   if (!elements.resumeTextInput.value.trim()) {
     loadPreset('frontend_to_fullstack');
   }
 });
 
-// ==========================================================================
-// Event Listeners
-// ==========================================================================
+
 function setupEventListeners() {
-  // Theme toggle
+
   elements.themeToggleBtn.addEventListener('click', () => {
     state.theme = state.theme === 'dark' ? 'light' : 'dark';
     localStorage.setItem('intelligap-theme', state.theme);
     applyTheme(state.theme);
     if (state.radarChart) renderRadarChart();
+    if (state.demandChart && state.demandCache[state.activeDemandSkill.toLowerCase()]) {
+      renderDemandLineChart(state.demandCache[state.activeDemandSkill.toLowerCase()]);
+    }
   });
 
-  // Preset selector
+
   elements.presetSelect.addEventListener('change', (e) => {
     if (e.target.value) {
       loadPreset(e.target.value);
     }
   });
 
-  // Clear buttons
+
   elements.clearResumeBtn.addEventListener('click', () => {
     elements.resumeTextInput.value = '';
     updateCharCounts();
@@ -144,16 +164,32 @@ function setupEventListeners() {
 
   elements.resetAppBtn.addEventListener('click', resetAll);
 
-  // File Upload
+
   elements.resumeFileInput.addEventListener('change', handleFileUpload);
 
-  // Analyze Action
+
   elements.analyzeBtn.addEventListener('click', executeAnalysis);
 
-  // Simulator Reset
+
   elements.resetSimBtn.addEventListener('click', resetSimulator);
 
-  // Matrix Tabs
+
+  if (elements.trackCustomSkillBtn && elements.customSkillSearchInput) {
+    elements.trackCustomSkillBtn.addEventListener('click', () => {
+      const q = elements.customSkillSearchInput.value.trim();
+      if (q) loadAndRenderSkillDemand(q);
+    });
+
+    elements.customSkillSearchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const q = elements.customSkillSearchInput.value.trim();
+        if (q) loadAndRenderSkillDemand(q);
+      }
+    });
+  }
+
+
   elements.matrixTabs.addEventListener('click', (e) => {
     if (e.target.classList.contains('matrix-tab')) {
       document.querySelectorAll('.matrix-tab').forEach(t => t.classList.remove('active'));
@@ -163,7 +199,7 @@ function setupEventListeners() {
     }
   });
 
-  // Export Actions
+
   elements.exportMarkdownBtn.addEventListener('click', downloadMarkdownRoadmap);
   elements.printReportBtn.addEventListener('click', () => window.print());
 }
@@ -192,13 +228,16 @@ function resetAll() {
   elements.dashboardSection.classList.add('hidden');
   state.analysisData = null;
   state.simulatedSkills.clear();
+  if (state.demandChart) {
+    state.demandChart.destroy();
+    state.demandChart = null;
+  }
+  if (elements.customSkillSearchInput) elements.customSkillSearchInput.value = '';
   updateParsedSection('None', 'No file selected', 'Awaiting Upload', []);
   showToast('Reset input fields.', 'info');
 }
 
-// ==========================================================================
-// File Upload & Drag & Drop Handling
-// ==========================================================================
+
 function setupDropzone() {
   ['dragenter', 'dragover'].forEach(eventName => {
     elements.dropzone.addEventListener(eventName, (e) => {
@@ -233,28 +272,39 @@ function handleFileUpload(e) {
   }
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function processResumeFile(file) {
   const formData = new FormData();
   formData.append('file', file);
 
-  elements.dropzoneText.textContent = `Processing ${file.name}...`;
+  elements.dropzoneText.textContent = `Analyzing document structure...`;
 
   try {
-    const response = await fetch('/api/parse-resume-file', {
+    const parsePromise = fetch('/api/parse-resume-file', {
       method: 'POST',
       body: formData
+    }).then(async res => {
+      if (!res.ok) {
+        throw new Error(`File parsing failed: ${res.statusText}`);
+      }
+      return res.json();
     });
 
-    if (!response.ok) {
-      throw new Error(`File parsing failed: ${response.statusText}`);
-    }
+    // Realistic scanning progression
+    await sleep(350);
+    elements.dropzoneText.textContent = `Parsing ${file.name} tokens & syntax trees...`;
+    await sleep(350);
+    elements.dropzoneText.textContent = `Extracting technical proficiencies & stack...`;
+    await sleep(350);
 
-    const data = await response.json();
+    const data = await parsePromise;
     elements.resumeTextInput.value = data.raw_text;
     updateCharCounts();
     elements.dropzoneText.textContent = `✓ Uploaded: ${file.name}`;
-    
-    // Update Special Parsed CV Live Overview
+
     const skillsList = Object.keys(data.skills || {});
     updateParsedSection(
       data.candidate_name || 'Uploaded Candidate',
@@ -263,9 +313,7 @@ async function processResumeFile(file) {
       skillsList
     );
 
-    // Trigger dual electric lightning flash
     triggerLightning(2);
-
     showToast(`Successfully extracted ${data.total_skills_count} skills from ${file.name}!`, 'success');
   } catch (err) {
     elements.dropzoneText.textContent = 'Drag & drop candidate CV here';
@@ -273,9 +321,7 @@ async function processResumeFile(file) {
   }
 }
 
-// ==========================================================================
-// Preset Loader
-// ==========================================================================
+
 async function loadPreset(presetId) {
   try {
     const response = await fetch(`/api/presets/${presetId}`);
@@ -288,7 +334,7 @@ async function loadPreset(presetId) {
     elements.presetSelect.value = presetId;
     updateCharCounts();
 
-    // Extract quick skills to populate the special parsed section
+
     const presetSkills = extractQuickSkills(preset.resume_text);
     const candidateName = preset.name.split('(')[0].trim() || 'Alex Chen';
     updateParsedSection(
@@ -305,9 +351,41 @@ async function loadPreset(presetId) {
   }
 }
 
-// ==========================================================================
-// Core Analysis Workflow
-// ==========================================================================
+
+async function runScanningSimulation(candidateName = 'Candidate') {
+  if (!elements.scanModal) return;
+
+  elements.scanModal.classList.remove('hidden');
+  elements.scanModalTitle.textContent = `Deconstructing ${candidateName}'s Credentials...`;
+  elements.scanLogBody.innerHTML = '';
+
+  const steps = [
+    { pct: 18, label: 'Reading document syntax & token hierarchy...', log: '› [0.2s] Syntax trees parsed. Initializing token vectorizer...' },
+    { pct: 42, label: 'Extracting technical proficiencies, frameworks & toolchains...', log: '› [0.6s] Detected technical competencies across frontend, backend & AI...' },
+    { pct: 68, label: 'Cross-referencing 2008–2026 global market demand indices...', log: '› [1.1s] Querying multi-year tech demand trends (2008–2026)...' },
+    { pct: 88, label: 'Computing multi-dimensional fit score & critical gap hierarchy...', log: '› [1.6s] Gap hierarchy mapped: separating mandatory vs preferred requirements...' },
+    { pct: 100, label: 'Synthesizing personalized 12-week roadmap & capstone blueprint...', log: '› [2.0s] Synthesis complete. Generating interactive milestone matrix.' }
+  ];
+
+  for (const step of steps) {
+    elements.scanProgressFill.style.width = `${step.pct}%`;
+    elements.scanPercentLabel.textContent = `${step.pct}%`;
+    elements.scanStepLabel.textContent = step.label;
+
+    const logItem = document.createElement('div');
+    logItem.className = 'log-entry log-active';
+    logItem.textContent = step.log;
+    elements.scanLogBody.appendChild(logItem);
+    elements.scanLogBody.scrollTop = elements.scanLogBody.scrollHeight;
+
+    await sleep(360);
+  }
+
+  await sleep(220);
+  elements.scanModal.classList.add('hidden');
+}
+
+
 async function executeAnalysis() {
   const resumeText = elements.resumeTextInput.value.trim();
   const jobText = elements.jobTextInput.value.trim();
@@ -325,13 +403,13 @@ async function executeAnalysis() {
     return;
   }
 
-  // Set Loading State & trigger analysis lightning
+
   elements.analyzeBtn.disabled = true;
   elements.analyzeSpinner.classList.remove('hidden');
   triggerLightning(1.6);
 
   try {
-    const response = await fetch('/api/analyze', {
+    const analysisPromise = fetch('/api/analyze', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -339,28 +417,32 @@ async function executeAnalysis() {
         job_text: jobText,
         job_title: jobTitle
       })
+    }).then(async res => {
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.detail || 'Analysis request failed.');
+      }
+      return res.json();
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.detail || 'Analysis request failed.');
-    }
+    const candidateName = elements.parsedCandidateName ? elements.parsedCandidateName.textContent : 'Candidate';
+    const [data] = await Promise.all([
+      analysisPromise,
+      runScanningSimulation(candidateName)
+    ]);
 
-    const data = await response.json();
     state.analysisData = data;
     state.simulatedSkills.clear();
 
-    // Celebratory lightning strike
     triggerLightning(2.5);
 
-    // Render Dashboard
     renderDashboard(data);
-    showToast('Skill gap analysis complete!', 'success');
+    showToast('Skill gap analysis complete & roadmap generated!', 'success');
 
-    // Smooth scroll down to dashboard
     elements.dashboardSection.classList.remove('hidden');
     elements.dashboardSection.scrollIntoView({ behavior: 'smooth' });
   } catch (err) {
+    if (elements.scanModal) elements.scanModal.classList.add('hidden');
     showToast(err.message, 'error');
   } finally {
     elements.analyzeBtn.disabled = false;
@@ -368,69 +450,252 @@ async function executeAnalysis() {
   }
 }
 
-// ==========================================================================
-// Dashboard Rendering
-// ==========================================================================
+
 function renderDashboard(data) {
   const { candidate, job, gap_analysis, roadmap } = data;
 
-  // Header banner info
   elements.resultsRoleTitle.textContent = `${job.title} Fit Assessment`;
   elements.candidateGreeting.textContent = `Candidate: ${candidate.candidate_name || 'Job Seeker'} | Identified ${candidate.total_skills_count} candidate skills vs ${job.total_skills} role requirements`;
 
-  // 1. Overall Match Score & Dial Animation
   const score = gap_analysis.overall_match_score;
   animateScoreDial(score);
 
-  // Readiness badge
   elements.readinessBadge.textContent = gap_analysis.readiness;
   elements.readinessBadge.className = `badge badge-${gap_analysis.readiness_badge}`;
 
-  // 2. Skill quantities
   elements.matchedCount.textContent = gap_analysis.total_matched_count;
   elements.criticalCount.textContent = gap_analysis.critical_gaps.length;
   elements.secondaryCount.textContent = gap_analysis.secondary_gaps.length;
   elements.extraCount.textContent = gap_analysis.extra_candidate_skills.length;
 
-  // Tab counts
   elements.tabCritCount.textContent = gap_analysis.critical_gaps.length;
   elements.tabSecCount.textContent = gap_analysis.secondary_gaps.length;
   elements.tabMatchCount.textContent = gap_analysis.total_matched_count;
   elements.tabExtraCount.textContent = gap_analysis.extra_candidate_skills.length;
 
-  // 3. Upskilling pace
   elements.totalWeeksVal.textContent = roadmap.total_weeks || 12;
   elements.totalHoursVal.textContent = roadmap.total_estimated_hours || 160;
 
-  // 4. Strategic guidance advice
   elements.strategicAdviceText.textContent = gap_analysis.advice;
 
-  // 5. Render Radar Chart
   renderRadarChart();
 
-  // 6. Setup What-If Simulator
+  setupDemandTrajectory(data);
+
   setupSimulator();
 
-  // 7. Render Matrix
   renderMatrixCards();
 
-  // 8. Render Roadmap Phases
   renderRoadmapTimeline(roadmap);
 
-  // 9. Render Capstone Deliverables
   renderCapstone(roadmap.capstone_project);
 }
 
-// ==========================================================================
-// SVG Dial Animation
-// ==========================================================================
+
+/* ==========================================================================
+   2008 - 2026 Historical & Future Skill Demand Trajectory Logic
+   ========================================================================== */
+
+function setupDemandTrajectory(data) {
+  if (!elements.demandTrajectoryCard) return;
+
+  const { gap_analysis, demand_trajectories } = data;
+
+  // Cache any pre-computed trajectories
+  if (demand_trajectories) {
+    Object.entries(demand_trajectories).forEach(([name, traj]) => {
+      state.demandCache[name.toLowerCase()] = traj;
+    });
+  }
+
+  // Build list of recommended skills to display as pills
+  const pillSkills = new Set();
+
+  // Matched candidate skills
+  (gap_analysis.matched_skills || []).slice(0, 3).forEach(s => pillSkills.add(s.name));
+
+  // Critical gaps (high priority)
+  (gap_analysis.critical_gaps || []).slice(0, 3).forEach(s => pillSkills.add(s.name));
+
+  // Secondary gaps
+  (gap_analysis.secondary_gaps || []).slice(0, 2).forEach(s => pillSkills.add(s.name));
+
+  // Industry benchmark staples
+  ['Python', 'TypeScript', 'React', 'Docker', 'Kubernetes', 'LangChain', 'Next.js', 'Rust'].forEach(s => {
+    if (pillSkills.size < 9) pillSkills.add(s);
+  });
+
+  const skillsList = Array.from(pillSkills);
+  setupDemandQuickPills(skillsList);
+
+  // Default to first skill or Python
+  const defaultSkill = skillsList[0] || 'Python';
+  loadAndRenderSkillDemand(defaultSkill);
+}
+
+function setupDemandQuickPills(skillsList) {
+  if (!elements.demandQuickPills) return;
+  elements.demandQuickPills.innerHTML = '';
+
+  skillsList.forEach((skillName, index) => {
+    const pill = document.createElement('button');
+    pill.type = 'button';
+    pill.className = `demand-pill ${index === 0 ? 'active' : ''}`;
+    pill.dataset.skill = skillName;
+    pill.textContent = skillName;
+
+    pill.addEventListener('click', () => {
+      loadAndRenderSkillDemand(skillName);
+    });
+
+    elements.demandQuickPills.appendChild(pill);
+  });
+}
+
+async function loadAndRenderSkillDemand(skillName) {
+  if (!skillName) return;
+  state.activeDemandSkill = skillName;
+
+  // Highlight pill
+  document.querySelectorAll('.demand-pill').forEach(p => {
+    if (p.dataset.skill.toLowerCase() === skillName.toLowerCase()) {
+      p.classList.add('active');
+    } else {
+      p.classList.remove('active');
+    }
+  });
+
+  let demandData = state.demandCache[skillName.toLowerCase()];
+  if (!demandData) {
+    try {
+      const res = await fetch(`/api/skill-demand?skill=${encodeURIComponent(skillName)}`);
+      if (res.ok) {
+        demandData = await res.json();
+        state.demandCache[skillName.toLowerCase()] = demandData;
+      }
+    } catch (err) {
+      console.error('Error fetching demand trajectory:', err);
+    }
+  }
+
+  if (!demandData) return;
+
+  if (elements.demandMetaSkillName) elements.demandMetaSkillName.textContent = demandData.skill;
+  if (elements.demandMetaStatus) elements.demandMetaStatus.textContent = demandData.market_status || 'In Demand';
+  if (elements.demandMetaCurrentScore) elements.demandMetaCurrentScore.innerHTML = `${demandData.current_2026_demand}<small>/100</small>`;
+  if (elements.demandMetaPeakYear) elements.demandMetaPeakYear.textContent = demandData.peak_year;
+  if (elements.demandMetaGrowth) elements.demandMetaGrowth.textContent = demandData.growth_yoy;
+  if (elements.demandMetaInsight) elements.demandMetaInsight.textContent = demandData.market_insight;
+  if (elements.demandMetaMilestone) elements.demandMetaMilestone.textContent = demandData.key_milestone || 'Key industry inflection point.';
+
+  renderDemandLineChart(demandData);
+}
+
+function renderDemandLineChart(data) {
+  if (!elements.demandLineCanvas) return;
+
+  if (state.demandChart) {
+    state.demandChart.destroy();
+  }
+
+  const isDark = state.theme === 'dark';
+  const textColor = isDark ? '#94a3b8' : '#475569';
+  const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+
+  const ctx = elements.demandLineCanvas.getContext('2d');
+  const gradient = ctx.createLinearGradient(0, 0, 0, 260);
+  gradient.addColorStop(0, 'rgba(0, 210, 255, 0.35)');
+  gradient.addColorStop(0.7, 'rgba(37, 99, 235, 0.1)');
+  gradient.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
+
+  state.demandChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: data.years,
+      datasets: [
+        {
+          label: `${data.skill} Demand Index (2008 – 2026)`,
+          data: data.demand_scores,
+          borderColor: '#00d2ff',
+          backgroundColor: gradient,
+          fill: true,
+          tension: 0.38,
+          borderWidth: 3,
+          pointBackgroundColor: '#00f5ff',
+          pointBorderColor: isDark ? '#0f172a' : '#ffffff',
+          pointBorderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          pointHoverBackgroundColor: '#ffffff',
+          pointHoverBorderColor: '#00d2ff'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        intersect: false,
+        mode: 'index'
+      },
+      scales: {
+        x: {
+          grid: { color: gridColor },
+          ticks: {
+            color: textColor,
+            font: { family: 'Plus Jakarta Sans', size: 11 },
+            maxRotation: 0,
+            autoSkip: true,
+            maxTicksLimit: 10
+          }
+        },
+        y: {
+          min: 0,
+          max: 100,
+          grid: { color: gridColor },
+          ticks: {
+            color: textColor,
+            font: { family: 'Plus Jakarta Sans', size: 11 },
+            stepSize: 25,
+            callback: (v) => `${v}%`
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          labels: {
+            color: textColor,
+            font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' }
+          }
+        },
+        tooltip: {
+          backgroundColor: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+          titleColor: isDark ? '#f8fafc' : '#0f172a',
+          bodyColor: isDark ? '#38bdf8' : '#2563eb',
+          borderColor: 'rgba(56, 189, 248, 0.3)',
+          borderWidth: 1,
+          padding: 10,
+          displayColors: false,
+          callbacks: {
+            title: (items) => `Year: ${items[0].label}`,
+            label: (item) => `Demand Index: ${item.raw} / 100`
+          }
+        }
+      }
+    }
+  });
+}
+
+
 function animateScoreDial(targetScore) {
-  const circumference = 2 * Math.PI * 58; // ~364.42
+  const circumference = 2 * Math.PI * 58; 
   const offset = circumference - (targetScore / 100) * circumference;
 
   elements.scoreCircle.style.strokeDashoffset = offset;
 
-  // Color stroke according to score tier
+
   if (targetScore >= 80) {
     elements.scoreCircle.style.stroke = 'var(--color-matched)';
   } else if (targetScore >= 60) {
@@ -441,7 +706,7 @@ function animateScoreDial(targetScore) {
     elements.scoreCircle.style.stroke = 'var(--color-critical)';
   }
 
-  // Numerical counter tick-up
+
   let currentVal = 0;
   const step = Math.max(1, Math.floor(targetScore / 30));
   const timer = setInterval(() => {
@@ -454,9 +719,7 @@ function animateScoreDial(targetScore) {
   }, 25);
 }
 
-// ==========================================================================
-// Radar Chart Visualization
-// ==========================================================================
+
 function renderRadarChart() {
   if (!state.analysisData) return;
   const radarData = state.analysisData.gap_analysis.radar_chart_data;
@@ -543,13 +806,11 @@ function renderRadarChart() {
   });
 }
 
-// ==========================================================================
-// What-If Skill Simulator
-// ==========================================================================
+
 function setupSimulator() {
   const { gap_analysis } = state.analysisData;
   const missingSkills = [...gap_analysis.critical_gaps, ...gap_analysis.secondary_gaps];
-  
+
   elements.simChipsContainer.innerHTML = '';
   elements.simScoreDelta.textContent = `Base: ${gap_analysis.overall_match_score}%`;
   elements.simProjectedScore.textContent = `${gap_analysis.overall_match_score}%`;
@@ -584,7 +845,7 @@ async function toggleSimulatedSkill(skillName, chipElement) {
     chipElement.textContent = `${skillName}`;
   }
 
-  // Call simulation endpoint
+
   const currentSkills = Object.keys(state.analysisData.candidate.skills);
   const acquired = Array.from(state.simulatedSkills);
 
@@ -635,9 +896,7 @@ function resetSimulator() {
   elements.simScoreDelta.style.color = 'var(--accent-cyan)';
 }
 
-// ==========================================================================
-// Skill Gap Matrix Rendering
-// ==========================================================================
+
 function renderMatrixCards() {
   if (!state.analysisData) return;
   const { gap_analysis } = state.analysisData;
@@ -693,9 +952,7 @@ function renderMatrixCards() {
   });
 }
 
-// ==========================================================================
-// Roadmap Timeline Rendering
-// ==========================================================================
+
 function renderRoadmapTimeline(roadmap) {
   const container = elements.timelineContainer;
   container.innerHTML = '';
@@ -704,7 +961,7 @@ function renderRoadmapTimeline(roadmap) {
     const phaseCard = document.createElement('div');
     phaseCard.className = 'glass-card phase-card';
 
-    // Build skills HTML
+
     let skillsHtml = '';
     if (phase.skills && phase.skills.length > 0) {
       const skillsGridItems = phase.skills.map(s => {
@@ -739,7 +996,7 @@ function renderRoadmapTimeline(roadmap) {
       `;
     }
 
-    // Milestones checklist
+
     const milestonesHtml = (phase.milestones || []).map((m, idx) => `
       <li class="milestone-item">
         <input type="checkbox" id="m_${phase.phase_number}_${idx}">
@@ -780,9 +1037,7 @@ function renderCapstone(capstone) {
   `).join('');
 }
 
-// ==========================================================================
-// Markdown Download
-// ==========================================================================
+
 function downloadMarkdownRoadmap() {
   if (!state.analysisData || !state.analysisData.markdown_roadmap) {
     showToast('No roadmap data to export.', 'error');
@@ -802,13 +1057,11 @@ function downloadMarkdownRoadmap() {
   showToast('Roadmap downloaded as Markdown!', 'success');
 }
 
-// ==========================================================================
-// Toast Notification System
-// ==========================================================================
+
 function showToast(message, type = 'info') {
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
-  
+
   const icon = type === 'success' ? '✓' : type === 'error' ? '⚠️' : 'ℹ️';
   toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
 
@@ -822,9 +1075,7 @@ function showToast(message, type = 'info') {
   }, 3500);
 }
 
-// ==========================================================================
-// Special CV Intake Section Controls & Helpers
-// ==========================================================================
+
 function setupCvIntakeTabs() {
   if (elements.cvTabUpload && elements.cvTabPaste) {
     elements.cvTabUpload.addEventListener('click', () => {
@@ -848,7 +1099,7 @@ function setupCvIntakeTabs() {
     });
   }
 
-  // Interactive Live Heart click easter egg!
+
   const liveHeart = document.querySelector('.live-heart');
   if (liveHeart) {
     liveHeart.addEventListener('click', () => {
@@ -907,9 +1158,7 @@ function extractQuickSkills(text) {
   });
 }
 
-// ==========================================================================
-// Dynamic Procedural Thunderbolt Lightning Background Engine
-// ==========================================================================
+
 let lightningEngine = {
   canvas: null,
   ctx: null,
@@ -934,11 +1183,11 @@ function initThunderboltBackground() {
   window.addEventListener('resize', resize);
   resize();
 
-  // Animation render loop
+
   function loop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Render soft ambient lightning flash
+
     if (lightningEngine.flashAlpha > 0.005) {
       const isDark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
       ctx.fillStyle = isDark
@@ -948,7 +1197,7 @@ function initThunderboltBackground() {
       lightningEngine.flashAlpha *= 0.88;
     }
 
-    // Render active lightning bolts
+
     for (let i = lightningEngine.bolts.length - 1; i >= 0; i--) {
       const bolt = lightningEngine.bolts[i];
       renderBolt(ctx, bolt);
@@ -962,7 +1211,7 @@ function initThunderboltBackground() {
   }
   loop();
 
-  // Schedule periodic ambient lightning strikes
+
   scheduleAmbientLightning();
 }
 
@@ -1018,7 +1267,7 @@ function buildBoltSegments(x, y, maxDepth, segments, branchLevel) {
       branchLevel
     });
 
-    // 18% chance of secondary branch
+
     if (branchLevel < 2 && Math.random() < 0.18) {
       const branchMaxDepth = maxDepth * (0.35 + Math.random() * 0.35);
       buildBoltSegments(nextX, nextY, branchMaxDepth, segments, branchLevel + 1);
@@ -1036,7 +1285,7 @@ function renderBolt(ctx, bolt) {
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
 
-  // Glow pass
+
   ctx.shadowBlur = 18;
   ctx.shadowColor = bolt.glowColor;
   ctx.strokeStyle = bolt.glowColor;
@@ -1050,7 +1299,7 @@ function renderBolt(ctx, bolt) {
   }
   ctx.stroke();
 
-  // Core sharp stroke pass
+
   ctx.shadowBlur = 4;
   ctx.shadowColor = '#ffffff';
   ctx.strokeStyle = bolt.color;

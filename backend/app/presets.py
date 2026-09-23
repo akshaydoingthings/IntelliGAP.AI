@@ -1,7 +1,3 @@
-"""
-Curated Presets: Candidate Profiles & Real-World Target Role Postings
-Provides instant 1-click presets for demonstration and benchmarking.
-"""
 
 from typing import Dict, List, Any
 
@@ -129,9 +125,7 @@ Nice to Have:
 }
 
 def get_all_presets() -> List[Dict[str, Any]]:
-    """Returns a list of all preset summaries."""
     return list(PRESET_PROFILES.values())
 
 def get_preset_by_id(preset_id: str) -> Dict[str, Any]:
-    """Returns details for a specific preset."""
     return PRESET_PROFILES.get(preset_id, list(PRESET_PROFILES.values())[0])

@@ -1,15 +1,41 @@
-"""
-NLP Skill Extraction Engine
-Extracts skills, context (required vs nice-to-have), experience mentions,
-and document text from resumes and job postings.
-"""
 
 import re
 import io
 from typing import Dict, List, Set, Tuple, Optional, Any
-from .taxonomy import SKILL_TAXONOMY, ALIAS_INDEX, resolve_skill_name
+from .taxonomy import SKILL_TAXONOMY, ALIAS_INDEX, resolve_skill_name, infer_skill_metadata, get_skill_metadata
 
-# Regular expressions for text extraction and document sections
+COMMON_NON_SKILL_WORDS: Set[str] = {
+    "a", "about", "above", "across", "after", "again", "against", "all", "almost", "alone", "along",
+    "already", "also", "although", "always", "among", "an", "and", "another", "any", "are", "as",
+    "at", "be", "because", "been", "before", "being", "both", "but", "by", "can", "could", "did",
+    "do", "does", "doing", "done", "down", "during", "each", "few", "for", "from", "further",
+    "good", "great", "had", "has", "have", "having", "he", "her", "here", "him", "his", "how",
+    "i", "if", "in", "into", "is", "it", "its", "itself", "just", "me", "more", "most", "my",
+    "myself", "no", "nor", "not", "now", "of", "off", "on", "once", "only", "or", "other",
+    "our", "ours", "out", "over", "own", "same", "she", "should", "so", "some", "such", "than",
+    "that", "the", "their", "theirs", "them", "then", "there", "these", "they", "this", "those",
+    "through", "to", "too", "under", "until", "up", "very", "was", "we", "were", "what", "when",
+    "where", "which", "while", "who", "whom", "why", "will", "with", "would", "you", "your",
+    # Resume boilerplate
+    "experience", "candidate", "responsibilities", "requirements", "qualifications", "education",
+    "degree", "bachelor", "master", "phd", "university", "college", "school", "summary",
+    "overview", "management", "communication", "collaborate", "teamwork", "leadership",
+    "working", "years", "year", "months", "month", "strong", "ability", "solutions",
+    "knowledge", "including", "proficient", "role", "team", "company", "project", "projects",
+    "work", "worked", "programmer", "developer", "engineer", "lead", "senior", "junior",
+    "intern", "director", "manager", "staff", "principal", "profile", "contact", "email",
+    "phone", "address", "city", "state", "country", "remote", "hybrid", "onsite", "full-time"
+}
+
+SKILLS_BLOCK_PATTERN = re.compile(
+    r"(?:skills|tech\s+stack|technologies|tools|proficiencies|technical\s+expertise|competencies)\s*[:\-]\s*([^\n\r]+)",
+    re.IGNORECASE
+)
+
+CAMEL_TECH_PATTERN = re.compile(r"\b[A-Z][a-z0-9]+[A-Z][A-Za-z0-9]*\b")
+FRAMEWORK_FILE_PATTERN = re.compile(r"\b[A-Za-z0-9\-_]{2,20}(?:\.js|\.py|DB)\b", re.IGNORECASE)
+
+
 REQUIRED_SECTION_PATTERNS = [
     r"(?:required|requirements|must\s+have|minimum\s+qualifications|basic\s+qualifications|what\s+you(?:'ll|\s+will)\s+need|what\s+we(?:'re|\s+are)\s+looking\s+for)",
 ]
@@ -28,7 +54,6 @@ PHONE_PATTERN = re.compile(r"(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]
 
 
 def extract_text_from_bytes(content: bytes, filename: str) -> str:
-    """Extracts plain text from raw file bytes (.txt, .pdf, .docx)."""
     lower_name = filename.lower()
     if lower_name.endswith(".pdf"):
         try:
@@ -37,7 +62,6 @@ def extract_text_from_bytes(content: bytes, filename: str) -> str:
             pages = [page.extract_text() or "" for page in reader.pages]
             return "\n".join(pages)
         except Exception as e:
-            # Fallback text decoding if pypdf fails
             return content.decode("utf-8", errors="ignore")
     elif lower_name.endswith(".docx"):
         try:
@@ -47,7 +71,6 @@ def extract_text_from_bytes(content: bytes, filename: str) -> str:
         except Exception:
             return content.decode("utf-8", errors="ignore")
     else:
-        # Assume plain text / markdown
         try:
             return content.decode("utf-8")
         except UnicodeDecodeError:
@@ -55,45 +78,29 @@ def extract_text_from_bytes(content: bytes, filename: str) -> str:
 
 
 def normalize_text(text: str) -> str:
-    """Cleans up text for tokenization while preserving skill punctuation."""
-    # Replace non-breaking spaces and redundant line breaks
     text = text.replace("\u00a0", " ").replace("\r\n", "\n")
     return text
 
 
 def extract_skills_from_text(text: str) -> Dict[str, Dict[str, Any]]:
-    """
-    Scans text for all canonical skills and aliases.
-    Returns dictionary of canonical_skill -> {frequency, count, sample_contexts}.
-    Uses regex token boundary checking to avoid false positives (e.g. 'Go' in 'Good').
-    """
     found_skills: Dict[str, Dict[str, Any]] = {}
     cleaned_text = normalize_text(text)
 
-    # Sort aliases by length descending so multi-word terms match before single tokens
-    # e.g., "Large Language Models" before "Models", "Machine Learning" before "Learning"
+    # 1. Match curated canonical taxonomy & known aliases
     sorted_terms = sorted(ALIAS_INDEX.keys(), key=lambda t: len(t), reverse=True)
-
-    # Track matched character spans to prevent overlapping matches
     matched_spans: List[Tuple[int, int]] = []
 
     for term in sorted_terms:
-        # Create boundary-safe regex pattern
         escaped_term = re.escape(term)
-        
-        # Special cases for terms like 'c++', 'c#', '.net'
         if term in ["c++", "c#", ".net", "r"]:
             pattern = re.compile(rf"(?<![A-Za-z0-9]){escaped_term}(?![A-Za-z0-9])", re.IGNORECASE)
         elif term == "go":
-            # For short word 'go', ensure it's capitalized as 'Go' or clearly distinct
             pattern = re.compile(r"(?<![A-Za-z0-9])(?:Go|Golang)(?![A-Za-z0-9])")
         else:
             pattern = re.compile(rf"\b{escaped_term}\b", re.IGNORECASE)
 
         for match in pattern.finditer(cleaned_text):
             start, end = match.span()
-            
-            # Check for overlap with already matched longer phrases
             overlaps = any(s <= start < e or s < end <= e for s, e in matched_spans)
             if overlaps:
                 continue
@@ -102,7 +109,7 @@ def extract_skills_from_text(text: str) -> Dict[str, Dict[str, Any]]:
             canonical = ALIAS_INDEX[term]
 
             if canonical not in found_skills:
-                metadata = SKILL_TAXONOMY.get(canonical, {})
+                metadata = SKILL_TAXONOMY.get(canonical, infer_skill_metadata(canonical))
                 found_skills[canonical] = {
                     "name": canonical,
                     "category": metadata.get("category", "General"),
@@ -114,7 +121,56 @@ def extract_skills_from_text(text: str) -> Dict[str, Dict[str, Any]]:
             found_skills[canonical]["occurrences"] += 1
             found_skills[canonical]["aliases_matched"].add(term)
 
-    # Convert sets to lists for JSON serialization
+    # 2. Open-Ended Detection: Parse explicit skills blocks (e.g. 'Skills: React, Bun, DuckDB, Vite')
+    for block_match in SKILLS_BLOCK_PATTERN.finditer(cleaned_text):
+        raw_block = block_match.group(1)
+        tokens = re.split(r"[,|•/;\t]", raw_block)
+        for tok in tokens:
+            cand = tok.strip().strip("-*•· ")
+            if not cand or len(cand) < 2 or len(cand) > 30:
+                continue
+            cand_clean = re.sub(r"[^\w\+\#\.\s\-]", "", cand).strip()
+            cand_clean = re.sub(r"^(?:and|or|&)\s+", "", cand_clean, flags=re.IGNORECASE).strip().strip(".")
+            if not cand_clean or cand_clean.lower() in COMMON_NON_SKILL_WORDS:
+                continue
+            # If already canonicalized or mapped
+            canon = resolve_skill_name(cand_clean)
+            final_name = canon if canon else (cand_clean.title() if cand_clean.islower() else cand_clean)
+            if final_name not in found_skills:
+                meta = get_skill_metadata(final_name)
+                found_skills[final_name] = {
+                    "name": final_name,
+                    "category": meta.get("category", "Technologies & Tools"),
+                    "difficulty": meta.get("difficulty", "Intermediate"),
+                    "occurrences": 1,
+                    "aliases_matched": {cand_clean.lower()}
+                }
+
+    # 3. Open-Ended Detection: CamelCase technical identifiers & file-style frameworks (e.g. ChromaDB, Next.js, LangChain)
+    for pattern in [CAMEL_TECH_PATTERN, FRAMEWORK_FILE_PATTERN]:
+        for match in pattern.finditer(cleaned_text):
+            start, end = match.span()
+            overlaps = any(s <= start < e or s < end <= e for s, e in matched_spans)
+            if overlaps:
+                continue
+
+            word = match.group(0).strip()
+            if len(word) < 3 or word.lower() in COMMON_NON_SKILL_WORDS:
+                continue
+
+            canon = resolve_skill_name(word)
+            final_name = canon if canon else word
+            if final_name not in found_skills:
+                matched_spans.append((start, end))
+                meta = get_skill_metadata(final_name)
+                found_skills[final_name] = {
+                    "name": final_name,
+                    "category": meta.get("category", "Technologies & Tools"),
+                    "difficulty": meta.get("difficulty", "Intermediate"),
+                    "occurrences": 1,
+                    "aliases_matched": {word.lower()}
+                }
+
     for skill in found_skills.values():
         skill["aliases_matched"] = list(skill["aliases_matched"])
 
@@ -122,18 +178,12 @@ def extract_skills_from_text(text: str) -> Dict[str, Dict[str, Any]]:
 
 
 def extract_job_posting_details(text: str) -> Dict[str, Any]:
-    """
-    Parses a job posting and segregates extracted skills into:
-    - required_skills
-    - preferred_skills
-    - general_skills
-    """
     all_skills = extract_skills_from_text(text)
-    
-    # Split text into sections or lines to assess required vs preferred context
+
+
     lines = text.split("\n")
-    current_context = "required"  # Default assumption for standard job specs
-    
+    current_context = "required"
+
     required_skills: Set[str] = set()
     preferred_skills: Set[str] = set()
 
@@ -143,8 +193,8 @@ def extract_job_posting_details(text: str) -> Dict[str, Any]:
             current_context = "preferred"
         elif any(re.search(p, line_lower) for p in REQUIRED_SECTION_PATTERNS):
             current_context = "required"
-        
-        # Check which skills exist in this line
+
+
         line_skills = extract_skills_from_text(line)
         for skill_name in line_skills:
             if current_context == "preferred":
@@ -152,11 +202,11 @@ def extract_job_posting_details(text: str) -> Dict[str, Any]:
             else:
                 required_skills.add(skill_name)
 
-    # Any skill in preferred that is not explicitly in required is classified as preferred
+
     pure_preferred = preferred_skills - required_skills
     pure_required = required_skills | (set(all_skills.keys()) - preferred_skills)
 
-    # Build structured output
+
     result = {
         "all_skills": all_skills,
         "required_skills": [all_skills[s] for s in pure_required if s in all_skills],
@@ -167,17 +217,16 @@ def extract_job_posting_details(text: str) -> Dict[str, Any]:
 
 
 def extract_resume_metadata(text: str) -> Dict[str, Any]:
-    """Extracts candidate contact/summary info and extracted skill inventory."""
     skills = extract_skills_from_text(text)
 
     email_match = EMAIL_PATTERN.search(text)
     phone_match = PHONE_PATTERN.search(text)
 
-    # Attempt to extract candidate name from the first non-empty lines
+
     lines = [l.strip() for l in text.split("\n") if l.strip()]
     candidate_name = lines[0] if lines and len(lines[0]) < 50 and not email_match else "Job Candidate"
 
-    # Group skills by category
+
     categorized: Dict[str, List[str]] = {}
     for skill_name, data in skills.items():
         cat = data.get("category", "Other")

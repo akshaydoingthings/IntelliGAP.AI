@@ -1,9 +1,3 @@
-"""
-Intelligent Skill Gap Analyzer - FastAPI Application
-Main entry point for API endpoints, file uploads, analysis workflows,
-and static frontend serving.
-"""
-
 import os
 from pathlib import Path
 from typing import Optional, List
@@ -22,6 +16,7 @@ from .nlp_extractor import (
 from .gap_analyzer import analyze_skill_gap, simulate_skill_acquisition
 from .roadmap_generator import generate_personalized_roadmap, export_roadmap_to_markdown
 from .presets import get_all_presets, get_preset_by_id
+from .taxonomy import get_skill_demand_trajectory, infer_skill_metadata, resolve_skill_name
 
 app = FastAPI(
     title="Intelligent Skill Gap Analyzer API",
@@ -29,7 +24,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Enable CORS for local development flexibility
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -38,7 +33,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Define request schemas
+
 class AnalyzeRequest(BaseModel):
     resume_text: str
     job_text: str
@@ -49,6 +44,10 @@ class SimulateRequest(BaseModel):
     acquired_skills: List[str]
     job_text: str
 
+class AiAnalyzeSkillRequest(BaseModel):
+    skill: str
+    target_role: Optional[str] = "Target Role"
+
 
 @app.get("/api/health")
 def health_check():
@@ -57,24 +56,48 @@ def health_check():
 
 @app.get("/api/presets")
 def list_presets():
-    """Returns curated demonstration presets."""
     return get_all_presets()
 
 
 @app.get("/api/presets/{preset_id}")
 def get_preset(preset_id: str):
-    """Returns a specific preset by ID."""
     return get_preset_by_id(preset_id)
+
+
+@app.get("/api/skill-demand")
+def get_skill_demand(skill: str = "Python"):
+    if not skill or not skill.strip():
+        raise HTTPException(status_code=400, detail="Skill name cannot be empty.")
+    return get_skill_demand_trajectory(skill.strip())
+
+
+@app.post("/api/ai-analyze-skill")
+def ai_analyze_skill(payload: AiAnalyzeSkillRequest):
+    skill_name = payload.skill.strip()
+    if not skill_name:
+        raise HTTPException(status_code=400, detail="Skill cannot be empty.")
+    trajectory = get_skill_demand_trajectory(skill_name)
+    meta = infer_skill_metadata(skill_name)
+    return {
+        "skill": trajectory["skill"],
+        "category": trajectory["category"],
+        "trajectory": trajectory,
+        "difficulty": meta.get("difficulty", "Intermediate"),
+        "learning_weeks": meta.get("learning_weeks", 2),
+        "project_idea": meta.get("project_idea", f"Build an end-to-end production solution with {skill_name}."),
+        "resources": meta.get("resources", []),
+        "market_status": trajectory["market_status"],
+        "market_insight": trajectory["market_insight"]
+    }
 
 
 @app.post("/api/parse-resume-file")
 async def parse_resume_file(file: UploadFile = File(...)):
-    """Extracts text and skills from an uploaded resume file (.pdf, .docx, .txt)."""
     contents = await file.read()
     raw_text = extract_text_from_bytes(contents, file.filename)
     if not raw_text.strip():
         raise HTTPException(status_code=400, detail="Could not extract text from the uploaded file.")
-    
+
     metadata = extract_resume_metadata(raw_text)
     metadata["raw_text"] = raw_text
     return metadata
@@ -82,13 +105,6 @@ async def parse_resume_file(file: UploadFile = File(...)):
 
 @app.post("/api/analyze")
 def analyze(payload: AnalyzeRequest):
-    """
-    Core analysis endpoint:
-    - Parses resume and job text
-    - Identifies candidate skills & job required/preferred skills
-    - Computes match percentage, category proficiencies, and gaps
-    - Generates personalized 12-week learning roadmap with curated resources
-    """
     if not payload.resume_text.strip():
         raise HTTPException(status_code=400, detail="Resume text cannot be empty.")
     if not payload.job_text.strip():
@@ -96,9 +112,9 @@ def analyze(payload: AnalyzeRequest):
 
     resume_data = extract_resume_metadata(payload.resume_text)
     job_data = extract_job_posting_details(payload.job_text)
-    
+
     gap_analysis = analyze_skill_gap(resume_data, job_data)
-    
+
     roadmap = generate_personalized_roadmap(
         critical_gaps=gap_analysis["critical_gaps"],
         secondary_gaps=gap_analysis["secondary_gaps"],
@@ -110,6 +126,21 @@ def analyze(payload: AnalyzeRequest):
         candidate_name=resume_data.get("candidate_name", "Candidate"),
         job_title=payload.job_title or "Target Role"
     )
+
+    # Pre-calculate 2008-2026 demand trajectories for top matched and gap skills
+    key_skills = []
+    for s in gap_analysis.get("matched_skills", [])[:4]:
+        key_skills.append(s["name"])
+    for s in gap_analysis.get("critical_gaps", [])[:4]:
+        if s["name"] not in key_skills:
+            key_skills.append(s["name"])
+    for s in gap_analysis.get("secondary_gaps", [])[:2]:
+        if s["name"] not in key_skills:
+            key_skills.append(s["name"])
+
+    demand_trajectories = {
+        s_name: get_skill_demand_trajectory(s_name) for s_name in key_skills
+    }
 
     return {
         "candidate": resume_data,
@@ -124,15 +155,13 @@ def analyze(payload: AnalyzeRequest):
         },
         "gap_analysis": gap_analysis,
         "roadmap": roadmap,
-        "markdown_roadmap": markdown_roadmap
+        "markdown_roadmap": markdown_roadmap,
+        "demand_trajectories": demand_trajectories
     }
 
 
 @app.post("/api/simulate")
 def simulate(payload: SimulateRequest):
-    """
-    Simulates match score changes when candidate acquires additional skills.
-    """
     job_data = extract_job_posting_details(payload.job_text)
     simulated_result = simulate_skill_acquisition(
         current_candidate_skills=payload.current_skills,
@@ -142,7 +171,6 @@ def simulate(payload: SimulateRequest):
     return simulated_result
 
 
-# Mount frontend static files
 FRONTEND_DIR = Path(__file__).resolve().parent.parent.parent / "frontend"
 
 if FRONTEND_DIR.exists():

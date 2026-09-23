@@ -1,8 +1,3 @@
-"""
-Personalized Roadmap Generator
-Synthesizes missing skills into a structured, phased 12-week learning plan
-with curated resources, weekly goals, and capstone project specifications.
-"""
 
 from typing import Dict, List, Any
 from .taxonomy import SKILL_TAXONOMY
@@ -12,16 +7,8 @@ def generate_personalized_roadmap(
     secondary_gaps: List[Dict[str, Any]], 
     job_title: str = "Target Role"
 ) -> Dict[str, Any]:
-    """
-    Constructs a phased learning plan based on missing skills.
-    Distributes skills into 4 logical phases:
-    - Phase 1 (Weeks 1-2): Foundations & Core Prerequisites
-    - Phase 2 (Weeks 3-6): Core Frameworks & Tooling
-    - Phase 3 (Weeks 7-10): Advanced Architecture & Capstone
-    - Phase 4 (Weeks 11-12): Interview Readiness & Portfolio
-    """
     all_gaps = critical_gaps + secondary_gaps
-    
+
     if not all_gaps:
         return {
             "total_weeks": 2,
@@ -50,7 +37,7 @@ def generate_personalized_roadmap(
             }
         }
 
-    # Partition skills by difficulty and priority
+
     phase1_skills = []
     phase2_skills = []
     phase3_skills = []
@@ -59,7 +46,7 @@ def generate_personalized_roadmap(
         name = skill_item["name"]
         meta = SKILL_TAXONOMY.get(name, {})
         difficulty = meta.get("difficulty", "Intermediate")
-        
+
         skill_payload = {
             "name": name,
             "category": meta.get("category", "General"),
@@ -73,20 +60,20 @@ def generate_personalized_roadmap(
             phase1_skills.append(skill_payload)
         elif difficulty == "Advanced":
             phase3_skills.append(skill_payload)
-        else:  # Intermediate
-            # Distribute between phase 2 and phase 1 if phase 1 is empty
+        else:
+
             if len(phase1_skills) < 2 and skill_payload["category"] in ["Languages", "Frontend"]:
                 phase1_skills.append(skill_payload)
             else:
                 phase2_skills.append(skill_payload)
 
-    # Balance phases if uneven
+
     if not phase1_skills and phase2_skills:
         phase1_skills.append(phase2_skills.pop(0))
     if not phase3_skills and phase2_skills and len(phase2_skills) > 2:
         phase3_skills.append(phase2_skills.pop(-1))
 
-    # Phase 1
+
     phase1 = {
         "phase_number": 1,
         "title": "Foundations & Core Prerequisites",
@@ -101,7 +88,7 @@ def generate_personalized_roadmap(
         ]
     }
 
-    # Phase 2
+
     phase2 = {
         "phase_number": 2,
         "title": "Core Tooling & Specialized Competencies",
@@ -116,7 +103,7 @@ def generate_personalized_roadmap(
         ]
     }
 
-    # Phase 3
+
     phase3 = {
         "phase_number": 3,
         "title": "Advanced Architecture & Capstone Project",
@@ -131,7 +118,7 @@ def generate_personalized_roadmap(
         ]
     }
 
-    # Phase 4
+
     phase4 = {
         "phase_number": 4,
         "title": "Interview Readiness & Portfolio Showcase",
@@ -146,7 +133,7 @@ def generate_personalized_roadmap(
         ]
     }
 
-    # Construct Capstone Project
+
     featured_skills = [s["name"] for s in all_gaps[:3]]
     capstone = {
         "title": f"Full-Stack {job_title} Capstone Platform",
@@ -160,7 +147,7 @@ def generate_personalized_roadmap(
     }
 
     total_weeks = 12
-    total_hours = (2 * 12) + (4 * 15) + (4 * 15) + (2 * 10)  # 164 hours over 12 weeks
+    total_hours = (2 * 12) + (4 * 15) + (4 * 15) + (2 * 10)
 
     return {
         "total_weeks": total_weeks,
@@ -171,7 +158,6 @@ def generate_personalized_roadmap(
 
 
 def export_roadmap_to_markdown(roadmap: Dict[str, Any], candidate_name: str, job_title: str) -> str:
-    """Generates clean, readable Markdown document of the learning roadmap."""
     lines = [
         f"# Personalized Learning Roadmap for {candidate_name}",
         f"**Target Role**: {job_title} | **Duration**: {roadmap.get('total_weeks', 12)} Weeks | **Total Effort**: ~{roadmap.get('total_estimated_hours', 160)} Hours\n",
@@ -181,7 +167,7 @@ def export_roadmap_to_markdown(roadmap: Dict[str, Any], candidate_name: str, job
     for phase in roadmap.get("phases", []):
         lines.append(f"## Phase {phase.get('phase_number')}: {phase.get('title')} ({phase.get('weeks')})")
         lines.append(f"**Goal**: {phase.get('goal')}\n")
-        
+
         skills = phase.get("skills", [])
         if skills:
             lines.append("### Skills to Master:")

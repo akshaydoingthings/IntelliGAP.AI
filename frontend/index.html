@@ -5,44 +5,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Intelligent Skill Gap Analyzer | AI Career Roadmap & Job Fit Engine</title>
   <meta name="description" content="AI-powered skill gap analyzer that parses resumes and job postings, calculates match scores, and builds personalized 12-week learning roadmaps.">
-  
-  <!-- Modern Google Fonts: Outfit & Plus Jakarta Sans -->
+
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Chart.js for Radar & Bar Visualizations -->
+
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-  <!-- Application Stylesheet -->
+
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-  <!-- Ambient background glow elements -->
+
   <div class="ambient-glow glow-1"></div>
   <div class="ambient-glow glow-2"></div>
 
-  <!-- Dynamic Thunderbolt Lightning Canvas -->
+
   <canvas id="thunderboltCanvas" class="thunderbolt-canvas"></canvas>
 
 
-  <!-- Top Navigation -->
   <header class="app-header">
     <div class="header-container">
-      <div class="brand-logo" id="brandLogo">
-        <div class="brand-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+      <div class="brand-logo" id="brandLogo" title="IntelliGap AI Career Intelligence">
+        <div class="brand-icon premium-motion-logo">
+          <div class="logo-ambient-aura"></div>
+          <svg class="logo-svg" width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="diagGradA" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#1E40AF" />
+                <stop offset="40%" stop-color="#2563EB" />
+                <stop offset="100%" stop-color="#00D2FF" />
+              </linearGradient>
+              <linearGradient id="diagGradB" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#38BDF8" />
+                <stop offset="60%" stop-color="#60A5FA" />
+                <stop offset="100%" stop-color="#2563EB" />
+              </linearGradient>
+              <linearGradient id="diagFacetGlow" x1="0%" y1="50%" x2="100%" y2="50%">
+                <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6" />
+                <stop offset="100%" stop-color="#00F5FF" stop-opacity="0.1" />
+              </linearGradient>
+            </defs>
+            <!-- Premium Diagonal Faceted Emblem -->
+            <path d="M18 2L32 10V26L18 34L4 26V10L18 2Z" fill="url(#diagGradA)" />
+            <path d="M18 4L30 11L18 18L6 11L18 4Z" fill="url(#diagGradB)" />
+            <path d="M18 18L30 11V25L18 32V18Z" fill="url(#diagGradA)" />
+            <path d="M6 11L18 18V32L6 25V11Z" fill="#1E3A8A" opacity="0.9" />
+            <path d="M18 18L26 13.5L18 9L10 13.5L18 18Z" fill="url(#diagFacetGlow)" />
+            <!-- Central diamond core -->
+            <polygon points="18,14 22,18 18,22 14,18" fill="#00F5FF" />
           </svg>
+          <div class="logo-shimmer-sweep"></div>
         </div>
         <div class="brand-text">
           <span class="brand-title">IntelliGap<span class="brand-accent">.AI</span></span>
-          <span class="brand-badge">PRO</span>
+          <span class="brand-badge live-pulse-badge"><span class="badge-pulsar-dot"></span>PRO</span>
         </div>
       </div>
 
       <div class="header-controls">
-        <!-- 1-Click Preset Selector -->
+
         <div class="preset-selector-wrap">
           <label for="presetSelect" class="sr-only">Choose Demo Preset</label>
           <div class="select-with-icon">
@@ -56,7 +80,7 @@
           </div>
         </div>
 
-        <!-- Theme Toggle -->
+
         <button id="themeToggleBtn" class="icon-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
           <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="5"></circle>
@@ -74,22 +98,23 @@
           </svg>
         </button>
 
-        <!-- Quick Reset -->
+
         <button id="resetAppBtn" class="btn btn-ghost" title="Clear Inputs">Clear</button>
       </div>
     </div>
   </header>
 
-  <!-- Main Content Layout -->
+
   <main class="main-container">
-    <!-- Hero Section -->
+
     <section class="hero-section">
       <div class="hero-tag">
         <span class="pulse-dot"></span> Intelligent NLP Career Acceleration
       </div>
       <h1 class="hero-title">
-        Bridge Your Skill Gaps. <br>
-        <span class="gradient-text">Land Your Target Role.</span>
+        Launch Your Tech Career with <br>
+        <span class="gradient-text neon-blue-gradient">Placement-Focused Skills</span> &amp; <br>
+        <span class="gradient-text neon-blue-gradient">Dynamic AI Roadmaps</span>
       </h1>
       <p class="hero-subtitle">
         Upload your resume and paste target job descriptions. Our AI engine extracts technical proficiencies, calculates your weighted match score, and generates a personalized 12-week learning roadmap with curated resources.
@@ -111,10 +136,10 @@
       </div>
     </section>
 
-    <!-- Dual Input Workflow Section -->
+
     <section class="input-section" id="inputSection">
       <div class="input-grid">
-        <!-- Special Resume / CV Intake Card -->
+
         <div class="glass-card input-card cv-special-card" id="resumeCard">
           <div class="card-header">
             <div class="card-title-group">
@@ -132,7 +157,7 @@
               </div>
             </div>
 
-            <!-- Upload Mode Switcher Tabs -->
+
             <div class="cv-mode-toggle" id="cvModeToggle">
               <button class="cv-tab-btn active" id="cvTabUpload" type="button">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -152,7 +177,7 @@
             </div>
           </div>
 
-          <!-- Special Upload Section Pane -->
+
           <div class="cv-pane" id="cvUploadPane">
             <div class="special-dropzone" id="dropzone">
               <input type="file" id="resumeFileInput" accept=".pdf,.docx,.txt" class="file-input-hidden">
@@ -174,7 +199,7 @@
               </div>
             </div>
 
-            <!-- Special Parsed CV Live Overview (Visible after upload or preset load) -->
+
             <div class="cv-parsed-section" id="cvParsedSection">
               <div class="parsed-header">
                 <div class="parsed-file-meta">
@@ -195,13 +220,13 @@
                   <button class="view-extracted-toggle" id="toggleRawExtractedBtn" type="button">Edit / View Text ▾</button>
                 </div>
                 <div class="parsed-skills-chips" id="parsedSkillsChips">
-                  <!-- Dynamically populated skill chips -->
+
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Direct Text / Edit Pane (Collapsible/Switchable) -->
+
           <div class="cv-pane hidden" id="cvPastePane">
             <div class="textarea-container">
               <textarea id="resumeTextInput" placeholder="Paste candidate resume, LinkedIn summary, or skill list here (e.g. 3 years experience with React, TypeScript, Node.js, PostgreSQL...)" rows="10"></textarea>
@@ -214,7 +239,7 @@
           </div>
         </div>
 
-        <!-- Job Description Card -->
+
         <div class="glass-card input-card" id="jobCard">
           <div class="card-header">
             <div class="card-title-group">
@@ -246,7 +271,7 @@
         </div>
       </div>
 
-      <!-- Action Button Area -->
+
       <div class="cta-center">
         <button id="analyzeBtn" class="btn btn-primary btn-lg pulse-hover">
           <span class="btn-icon">✨</span>
@@ -256,9 +281,61 @@
       </div>
     </section>
 
-    <!-- Dynamic Analysis Dashboard (Shown upon analysis) -->
+
+    <!-- Realistic CV Scanning & Processing High-Tech Overlay Modal -->
+    <div class="scan-modal-overlay hidden" id="scanModal">
+      <div class="glass-card scan-modal-card">
+        <div class="scan-visual-wrapper">
+          <div class="scan-doc-graphic">
+            <div class="doc-line doc-line-lg"></div>
+            <div class="doc-line doc-line-md"></div>
+            <div class="doc-line doc-line-sm"></div>
+            <div class="doc-line doc-line-full"></div>
+            <div class="doc-line doc-line-md"></div>
+            <div class="hologram-beam"></div>
+          </div>
+          <div class="scan-radar-rings">
+            <div class="radar-ring r-1"></div>
+            <div class="radar-ring r-2"></div>
+            <div class="radar-ring r-3"></div>
+          </div>
+        </div>
+
+        <div class="scan-content">
+          <div class="scan-status-badge">
+            <span class="scan-pulsar"></span> AI Neural Analysis Engine Active
+          </div>
+          <h3 class="scan-title" id="scanModalTitle">Deconstructing Candidate Credentials...</h3>
+          <p class="scan-subtitle" id="scanModalSubtitle">Running AST parsing, 500+ token classification & market benchmarking</p>
+
+          <div class="scan-progress-wrapper">
+            <div class="scan-progress-bar">
+              <div class="scan-progress-fill" id="scanProgressFill"></div>
+            </div>
+            <div class="scan-progress-labels">
+              <span id="scanStepLabel">Tokenizing syntax trees & framework proficiencies...</span>
+              <span id="scanPercentLabel">0%</span>
+            </div>
+          </div>
+
+          <div class="scan-log-terminal">
+            <div class="terminal-header">
+              <span class="term-dot red"></span>
+              <span class="term-dot yellow"></span>
+              <span class="term-dot green"></span>
+              <span class="term-title">intelligap-nlp-core.log</span>
+            </div>
+            <div class="terminal-body" id="scanLogBody">
+              <div class="log-entry log-active">› [0.1s] Initializing parsing workers and taxonomy indices...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <section class="dashboard-section hidden" id="dashboardSection">
-      <!-- Section Header -->
+
       <div class="dashboard-banner">
         <div class="dashboard-headline">
           <span class="badge badge-subtle">Analysis Results</span>
@@ -277,9 +354,9 @@
         </div>
       </div>
 
-      <!-- KPI Overview Cards -->
+
       <div class="kpi-grid">
-        <!-- Overall Match Score Dial -->
+
         <div class="glass-card kpi-card match-dial-card">
           <div class="kpi-label">Overall Match Score</div>
           <div class="dial-container">
@@ -296,7 +373,7 @@
           </div>
         </div>
 
-        <!-- Skills Quantities -->
+
         <div class="glass-card kpi-card">
           <div class="kpi-label">Skill Breakdown</div>
           <div class="skill-stats-list">
@@ -323,7 +400,7 @@
           </div>
         </div>
 
-        <!-- Upskilling Timeline -->
+
         <div class="glass-card kpi-card">
           <div class="kpi-label">Estimated Upskilling Pace</div>
           <div class="upskilling-info">
@@ -336,7 +413,7 @@
           </div>
         </div>
 
-        <!-- Strategic Guidance Advice -->
+
         <div class="glass-card kpi-card advice-card">
           <div class="kpi-label">Strategic Recommendation</div>
           <p class="advice-text" id="strategicAdviceText">Loading recommendation...</p>
@@ -347,9 +424,9 @@
         </div>
       </div>
 
-      <!-- Visual Analytics & What-If Simulator Grid -->
+
       <div class="analytics-grid">
-        <!-- Skill Radar Chart -->
+
         <div class="glass-card chart-card">
           <div class="card-header">
             <div>
@@ -362,7 +439,7 @@
           </div>
         </div>
 
-        <!-- Interactive What-If Simulator -->
+
         <div class="glass-card simulator-card" id="simulatorCard">
           <div class="card-header">
             <div>
@@ -375,7 +452,7 @@
           <div class="simulator-body">
             <p class="sim-instruction">Click skills you are ready to learn to project your new score:</p>
             <div class="sim-chips-container" id="simChipsContainer">
-              <!-- Dynamically populated missing skill chips -->
+
             </div>
           </div>
 
@@ -389,7 +466,73 @@
         </div>
       </div>
 
-      <!-- Skill Gap Matrix Section -->
+
+      <!-- 2008 - 2026 Historical & Future Skill Demand Trajectory Engine -->
+      <div class="glass-card demand-trajectory-card" id="demandTrajectoryCard">
+        <div class="card-header demand-header">
+          <div>
+            <div class="heading-with-tag">
+              <h3 class="card-heading">📈 Global Tech Demand Trajectory (2008 – 2026)</h3>
+              <span class="special-badge badge-neon">⚡ Market Intelligence</span>
+            </div>
+            <p class="card-subheading">Year-by-year demand curve (0–100 scale), historical milestones & 2026 forecast for ANY skill</p>
+          </div>
+
+          <div class="demand-search-box">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="customSkillSearchInput" placeholder="Search or track ANY skill (e.g. LangChain, Rust, Next.js, DuckDB)..." autocomplete="off">
+              <button class="btn btn-sm btn-primary" id="trackCustomSkillBtn" type="button">Track Trend</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="demand-pills-bar">
+          <span class="pills-label">Quick Analyze:</span>
+          <div class="demand-quick-pills" id="demandQuickPills">
+            <!-- Dynamically populated with role skills + top technologies -->
+          </div>
+        </div>
+
+        <div class="demand-chart-grid">
+          <div class="demand-chart-container">
+            <div class="chart-wrapper">
+              <canvas id="demandLineChart" height="280"></canvas>
+            </div>
+          </div>
+
+          <div class="demand-meta-panel" id="demandMetaPanel">
+            <div class="meta-skill-title-row">
+              <h4 class="meta-skill-name" id="demandMetaSkillName">Python</h4>
+              <span class="badge badge-accent" id="demandMetaStatus">Global Standard #1</span>
+            </div>
+            <div class="demand-kpis-row">
+              <div class="demand-kpi-box">
+                <span class="kpi-micro-label">2026 Market Demand</span>
+                <span class="kpi-big-num text-cyan" id="demandMetaCurrentScore">99<small>/100</small></span>
+              </div>
+              <div class="demand-kpi-box">
+                <span class="kpi-micro-label">Peak Year</span>
+                <span class="kpi-big-num" id="demandMetaPeakYear">2026</span>
+              </div>
+              <div class="demand-kpi-box">
+                <span class="kpi-micro-label">YoY Velocity</span>
+                <span class="kpi-big-num text-success" id="demandMetaGrowth">+14.2%</span>
+              </div>
+            </div>
+
+            <div class="demand-insight-box">
+              <div class="insight-label">💡 Industry Outlook & Tech Placement:</div>
+              <p class="insight-text" id="demandMetaInsight">Dominates AI/ML, data engineering, and automation; unmatched surge from 2018 onwards driven by Deep Learning and GenAI.</p>
+              <div class="milestone-text">
+                <strong>Key Milestone:</strong> <span id="demandMetaMilestone">2023–2026: Official lingua franca of the Generative AI revolution.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <div class="glass-card matrix-section">
         <div class="card-header matrix-header">
           <div>
@@ -397,7 +540,7 @@
             <p class="card-subheading">Categorized breakdown of existing qualifications vs required competencies</p>
           </div>
 
-          <!-- Category Filter Tabs -->
+
           <div class="matrix-tabs" id="matrixTabs">
             <button class="matrix-tab active" data-tab="all">All Skills</button>
             <button class="matrix-tab" data-tab="critical">Critical Gaps (<span id="tabCritCount">0</span>)</button>
@@ -408,11 +551,11 @@
         </div>
 
         <div class="matrix-grid" id="matrixGrid">
-          <!-- Dynamically populated skill cards -->
+
         </div>
       </div>
 
-      <!-- Personalized 12-Week Phased Roadmap Section -->
+
       <div class="roadmap-section">
         <div class="section-title-wrap">
           <span class="badge badge-accent">Actionable Trajectory</span>
@@ -421,19 +564,19 @@
         </div>
 
         <div class="timeline-container" id="timelineContainer">
-          <!-- Dynamically populated Phase cards -->
+
         </div>
 
-        <!-- Flagship Capstone Project Card -->
+
         <div class="glass-card capstone-card" id="capstoneCard">
           <div class="capstone-badge">🏆 Flagship Showcase</div>
           <h3 class="capstone-title" id="capstoneTitle">Full-Stack Capstone Project</h3>
           <p class="capstone-desc" id="capstoneDesc">A production-grade application integrating your new competencies.</p>
-          
+
           <div class="deliverables-box">
             <h4>Recommended Capstone Deliverables:</h4>
             <ul id="capstoneDeliverablesList">
-              <!-- Populated by JS -->
+
             </ul>
           </div>
         </div>
@@ -441,10 +584,10 @@
     </section>
   </main>
 
-  <!-- Notification Toast -->
+
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- App Footer with Live Heart & Akshay Attribution -->
+
   <footer class="app-footer">
     <div class="footer-container">
       <div class="footer-bolt-badge">⚡ IntelliGap Engine</div>
@@ -455,7 +598,7 @@
     </div>
   </footer>
 
-  <!-- Application Script -->
+
   <script src="/static/app.js"></script>
 </body>
 </html>
