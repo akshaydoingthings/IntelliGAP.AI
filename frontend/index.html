@@ -3,86 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Intelligent Skill Gap Analyzer | AI Career Roadmap & Job Fit Engine</title>
-  <meta name="description" content="AI-powered skill gap analyzer that parses resumes and job postings, calculates match scores, and builds personalized 12-week learning roadmaps.">
+  <title>IntelliGap — Developer Skill Gap Analysis & Career Roadmaps</title>
+  <meta name="description" content="IntelliGap compares your technical resume against target job requirements, identifies critical skill gaps, and generates an actionable 12-week learning roadmap.">
 
-
+  <!-- Typography: Inter for clean, high-credibility developer tools -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-
+  <!-- Chart.js for data visualization -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
 
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
 
-  <div class="ambient-glow glow-1"></div>
-  <div class="ambient-glow glow-2"></div>
-
-
-  <canvas id="thunderboltCanvas" class="thunderbolt-canvas"></canvas>
-
-
+  <!-- Navigation -->
   <header class="app-header">
     <div class="header-container">
-      <div class="brand-logo" id="brandLogo" title="IntelliGap AI Career Intelligence">
-        <div class="brand-icon premium-motion-logo">
-          <div class="logo-ambient-aura"></div>
-          <svg class="logo-svg" width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="diagGradA" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#1E40AF" />
-                <stop offset="40%" stop-color="#2563EB" />
-                <stop offset="100%" stop-color="#00D2FF" />
-              </linearGradient>
-              <linearGradient id="diagGradB" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#38BDF8" />
-                <stop offset="60%" stop-color="#60A5FA" />
-                <stop offset="100%" stop-color="#2563EB" />
-              </linearGradient>
-              <linearGradient id="diagFacetGlow" x1="0%" y1="50%" x2="100%" y2="50%">
-                <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6" />
-                <stop offset="100%" stop-color="#00F5FF" stop-opacity="0.1" />
-              </linearGradient>
-            </defs>
-            <!-- Premium Diagonal Faceted Emblem -->
-            <path d="M18 2L32 10V26L18 34L4 26V10L18 2Z" fill="url(#diagGradA)" />
-            <path d="M18 4L30 11L18 18L6 11L18 4Z" fill="url(#diagGradB)" />
-            <path d="M18 18L30 11V25L18 32V18Z" fill="url(#diagGradA)" />
-            <path d="M6 11L18 18V32L6 25V11Z" fill="#1E3A8A" opacity="0.9" />
-            <path d="M18 18L26 13.5L18 9L10 13.5L18 18Z" fill="url(#diagFacetGlow)" />
-            <!-- Central diamond core -->
-            <polygon points="18,14 22,18 18,22 14,18" fill="#00F5FF" />
+      <div class="brand-area" id="brandLogo">
+        <a href="/" class="brand-logo" aria-label="IntelliGap Home">
+          <svg class="brand-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
           </svg>
-          <div class="logo-shimmer-sweep"></div>
-        </div>
-        <div class="brand-text">
-          <span class="brand-title">IntelliGap<span class="brand-accent">.AI</span></span>
-          <span class="brand-badge live-pulse-badge"><span class="badge-pulsar-dot"></span>PRO</span>
-        </div>
+          <span class="brand-name">IntelliGap</span>
+        </a>
       </div>
 
-      <div class="header-controls">
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="#inputSection" class="nav-link">Product</a>
+        <a href="#howItWorks" class="nav-link">How it Works</a>
+        <a href="#demandTrajectoryCard" class="nav-link">Market Context</a>
+      </nav>
 
-        <div class="preset-selector-wrap">
-          <label for="presetSelect" class="sr-only">Choose Demo Preset</label>
-          <div class="select-with-icon">
-            <span class="select-icon">⚡</span>
-            <select id="presetSelect" aria-label="Select Demo Profile">
-              <option value="" disabled selected>Load Demo Persona...</option>
-              <option value="frontend_to_fullstack">Alex Chen: Frontend → Full-Stack</option>
-              <option value="analyst_to_ml_engineer">Priya Sharma: Data Analyst → AI/ML</option>
-              <option value="backend_to_devops">Marcus Vance: Backend → Cloud DevOps</option>
-            </select>
-          </div>
+      <div class="header-actions">
+        <div class="preset-dropdown-wrap">
+          <label for="presetSelect" class="sr-only">Choose Demo Persona</label>
+          <select id="presetSelect" aria-label="Select Demo Profile" class="select-preset">
+            <option value="" disabled selected>Load Demo Persona</option>
+            <option value="frontend_to_fullstack">Alex Chen (Frontend → Full-Stack)</option>
+            <option value="analyst_to_ml_engineer">Priya Sharma (Data Analyst → AI/ML)</option>
+            <option value="backend_to_devops">Marcus Vance (Backend → Cloud DevOps)</option>
+          </select>
         </div>
 
-
-        <button id="themeToggleBtn" class="icon-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
-          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Theme" aria-label="Toggle Dark and Light Mode">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
             <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -93,511 +61,624 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
 
-
-        <button id="resetAppBtn" class="btn btn-ghost" title="Clear Inputs">Clear</button>
+        <a href="#inputSection" class="btn btn-sm btn-primary nav-cta">Try IntelliGap</a>
       </div>
     </div>
   </header>
 
+  <main class="page-container">
 
-  <main class="main-container">
-
+    <!-- Hero Section -->
     <section class="hero-section">
-      <div class="hero-tag">
-        <span class="pulse-dot"></span> Intelligent NLP Career Acceleration
-      </div>
-      <h1 class="hero-title">
-        Launch Your Tech Career with <br>
-        <span class="gradient-text neon-blue-gradient">Placement-Focused Skills</span> &amp; <br>
-        <span class="gradient-text neon-blue-gradient">Dynamic AI Roadmaps</span>
-      </h1>
-      <p class="hero-subtitle">
-        Upload your resume and paste target job descriptions. Our AI engine extracts technical proficiencies, calculates your weighted match score, and generates a personalized 12-week learning roadmap with curated resources.
-      </p>
+      <div class="hero-content">
+        <div class="badge-pill">Developer Career Intelligence</div>
+        <h1 class="hero-headline">
+          Find exactly what's missing for your next tech role.
+        </h1>
+        <p class="hero-subtext">
+          Upload your resume and a target job description. IntelliGap identifies your skill gaps, explains what matters most, and builds a roadmap to help you close them.
+        </p>
 
-      <div class="hero-metrics">
-        <div class="metric-pill">
-          <span class="metric-icon">🎯</span>
-          <span><strong>500+</strong> Curated Skills & Aliases</span>
+        <div class="hero-actions">
+          <a href="#inputSection" class="btn btn-primary btn-lg" id="heroAnalyzeCta">Analyze My Skill Gap</a>
+          <button type="button" class="btn btn-secondary btn-lg" id="heroDemoBtn">See a Demo</button>
         </div>
-        <div class="metric-pill">
-          <span class="metric-icon">🔮</span>
-          <span><strong>What-If</strong> Live Score Simulator</span>
-        </div>
-        <div class="metric-pill">
-          <span class="metric-icon">🗺️</span>
-          <span><strong>12-Week</strong> Phased Timeline & Projects</span>
+
+        <div class="hero-trust-bar">
+          <span class="trust-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            500+ Standardized Tech Skills
+          </span>
+          <span class="trust-divider">•</span>
+          <span class="trust-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Deterministic Weighted Fit Scoring
+          </span>
+          <span class="trust-divider">•</span>
+          <span class="trust-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Actionable 12-Week Milestones
+          </span>
         </div>
       </div>
     </section>
 
+    <!-- How It Works Strip -->
+    <section class="how-it-works-strip" id="howItWorks">
+      <div class="step-card">
+        <span class="step-number">01</span>
+        <h3 class="step-title">Extract Qualifications</h3>
+        <p class="step-desc">Parse existing candidate credentials, frameworks, and proficiencies from resume or text.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-number">02</span>
+        <h3 class="step-title">Benchmark Requirements</h3>
+        <p class="step-desc">Extract required vs preferred competencies directly from the target job posting.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-number">03</span>
+        <h3 class="step-title">Identify Critical Gaps</h3>
+        <p class="step-desc">Calculate weighted role alignment and isolate high-priority missing technical skills.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-number">04</span>
+        <h3 class="step-title">Execute Roadmap</h3>
+        <p class="step-desc">Follow a structured 4-phase learning plan with weekly deliverables and a capstone project.</p>
+      </div>
+    </section>
 
+    <!-- Two-Column Input Section -->
     <section class="input-section" id="inputSection">
-      <div class="input-grid">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Candidate &amp; Role Input</h2>
+          <p class="section-subtitle">Provide your technical background and target job requirements to generate a complete match breakdown.</p>
+        </div>
+        <button id="resetAppBtn" class="btn btn-ghost btn-sm" title="Clear all input fields">Clear Inputs</button>
+      </div>
 
-        <div class="glass-card input-card cv-special-card" id="resumeCard">
-          <div class="card-header">
+      <div class="input-grid">
+        <!-- Left: Resume Input -->
+        <div class="input-card" id="resumeCard">
+          <div class="card-top">
             <div class="card-title-group">
-              <div class="card-icon resume-icon special-bolt-glow">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-                </svg>
-              </div>
+              <span class="card-step-badge">1</span>
               <div>
-                <div class="heading-with-tag">
-                  <h2 class="card-heading">1. Candidate CV Intake</h2>
-                  <span class="special-badge">⚡ Special Section</span>
-                </div>
-                <p class="card-subheading">Upload candidate resume (.pdf, .docx, .txt) or paste raw credentials</p>
+                <h3 class="card-heading">Candidate Resume</h3>
+                <p class="card-subtext">Upload a document or paste raw text</p>
               </div>
             </div>
 
-
-            <div class="cv-mode-toggle" id="cvModeToggle">
-              <button class="cv-tab-btn active" id="cvTabUpload" type="button">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="17 8 12 3 7 8"></polyline>
-                  <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-                Smart Upload
-              </button>
-              <button class="cv-tab-btn" id="cvTabPaste" type="button">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                </svg>
-                Paste / Edit
-              </button>
+            <div class="card-tabs" id="cvModeToggle" role="tablist">
+              <button class="tab-btn active" id="cvTabUpload" type="button" role="tab" aria-selected="true">Upload File</button>
+              <button class="tab-btn" id="cvTabPaste" type="button" role="tab" aria-selected="false">Paste Text</button>
             </div>
           </div>
 
-
-          <div class="cv-pane" id="cvUploadPane">
-            <div class="special-dropzone" id="dropzone">
-              <input type="file" id="resumeFileInput" accept=".pdf,.docx,.txt" class="file-input-hidden">
-              <div class="dropzone-inner">
-                <div class="dropzone-bolt-icon">
-                  <svg width="38" height="38" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+          <!-- Upload Pane -->
+          <div class="pane-content" id="cvUploadPane">
+            <div class="file-dropzone" id="dropzone" tabindex="0" role="button" aria-label="Drop candidate resume file here or click to browse">
+              <input type="file" id="resumeFileInput" accept=".pdf,.docx,.txt" class="file-input-hidden" aria-label="Upload resume file">
+              <div class="dropzone-center">
+                <div class="dropzone-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
                   </svg>
                 </div>
-                <div class="dropzone-prompt">
-                  <span class="dropzone-title" id="dropzoneText">Drag & drop candidate CV here</span>
-                  <span class="dropzone-subtitle">or <span class="browse-link">browse from device</span></span>
-                </div>
-                <div class="format-badges">
-                  <span class="format-badge"><span class="badge-dot"></span> PDF</span>
-                  <span class="format-badge"><span class="badge-dot"></span> DOCX</span>
-                  <span class="format-badge"><span class="badge-dot"></span> TXT</span>
-                </div>
+                <div class="dropzone-text" id="dropzoneText">Drag &amp; drop resume file here, or click to browse</div>
+                <div class="dropzone-formats">Supports PDF, DOCX, and TXT (Max 5MB)</div>
               </div>
             </div>
 
-
-            <div class="cv-parsed-section" id="cvParsedSection">
-              <div class="parsed-header">
-                <div class="parsed-file-meta">
-                  <div class="file-icon-box">📄</div>
-                  <div class="file-details">
-                    <span class="parsed-file-name" id="parsedFileName">Resume Profile Loaded</span>
-                    <span class="parsed-file-status" id="parsedFileStatus">NLP Parsed Successfully</span>
-                  </div>
+            <!-- Parsed Summary Pill -->
+            <div class="parsed-file-card" id="cvParsedSection">
+              <div class="parsed-file-info">
+                <div class="file-meta">
+                  <span class="file-badge">Active</span>
+                  <span class="file-name" id="parsedFileName">Resume Profile Loaded</span>
+                  <span class="file-status" id="parsedFileStatus">Ready for analysis</span>
                 </div>
-                <div class="parsed-candidate-pill" id="parsedCandidatePill">
-                  <span class="pill-label">Candidate:</span>
-                  <strong id="parsedCandidateName">Alex Chen</strong>
+                <div class="candidate-tag" id="parsedCandidatePill">
+                  Candidate: <strong id="parsedCandidateName">Alex Chen</strong>
                 </div>
               </div>
-              <div class="parsed-skills-preview">
-                <div class="preview-label-row">
-                  <span class="preview-label">Detected Skills Inventory (<span id="parsedSkillsCount">0</span>)</span>
-                  <button class="view-extracted-toggle" id="toggleRawExtractedBtn" type="button">Edit / View Text ▾</button>
-                </div>
-                <div class="parsed-skills-chips" id="parsedSkillsChips">
 
+              <div class="parsed-skills-wrap">
+                <div class="parsed-skills-header">
+                  <span class="skills-count-label">Detected Skills (<span id="parsedSkillsCount">0</span>)</span>
+                  <button type="button" class="btn-link" id="toggleRawExtractedBtn">Edit Text</button>
+                </div>
+                <div class="skills-chip-list" id="parsedSkillsChips">
+                  <!-- Skill chips populated via JS -->
                 </div>
               </div>
             </div>
           </div>
 
-
-          <div class="cv-pane hidden" id="cvPastePane">
-            <div class="textarea-container">
-              <textarea id="resumeTextInput" placeholder="Paste candidate resume, LinkedIn summary, or skill list here (e.g. 3 years experience with React, TypeScript, Node.js, PostgreSQL...)" rows="10"></textarea>
+          <!-- Paste Pane -->
+          <div class="pane-content hidden" id="cvPastePane">
+            <div class="textarea-wrap">
+              <label for="resumeTextInput" class="sr-only">Resume Text</label>
+              <textarea id="resumeTextInput" placeholder="Paste candidate resume, technical summary, or skill list (e.g. 4 years of experience with React, TypeScript, Node.js, PostgreSQL, Docker...)" rows="10"></textarea>
             </div>
           </div>
 
-          <div class="card-footer">
-            <span class="char-count" id="resumeCharCount">0 characters</span>
-            <button class="btn-text" id="clearResumeBtn">Clear Resume</button>
+          <div class="card-bottom">
+            <span class="counter-text" id="resumeCharCount">0 characters</span>
+            <button type="button" class="btn-link" id="clearResumeBtn">Clear</button>
           </div>
         </div>
 
-
-        <div class="glass-card input-card" id="jobCard">
-          <div class="card-header">
+        <!-- Right: Target Job Description Input -->
+        <div class="input-card" id="jobCard">
+          <div class="card-top">
             <div class="card-title-group">
-              <div class="card-icon job-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                </svg>
-              </div>
+              <span class="card-step-badge">2</span>
               <div>
-                <h2 class="card-heading">2. Target Job Description</h2>
-                <p class="card-subheading">Paste LinkedIn / Indeed job posting or target spec</p>
+                <h3 class="card-heading">Target Job Description</h3>
+                <p class="card-subtext">Paste the full job specification</p>
               </div>
             </div>
 
-            <div class="input-field-compact">
-              <input type="text" id="jobTitleInput" placeholder="Target Role Title (e.g. Senior Full-Stack Engineer)" value="Senior Full-Stack Software Engineer">
+            <div class="role-title-input-wrap">
+              <label for="jobTitleInput" class="sr-only">Target Role Title</label>
+              <input type="text" id="jobTitleInput" placeholder="Role Title (e.g. Senior Full-Stack Engineer)" value="Senior Full-Stack Software Engineer">
             </div>
           </div>
 
-          <div class="textarea-container">
-            <textarea id="jobTextInput" placeholder="Paste target job description including 'Requirements' and 'Preferred Skills' here..." rows="12"></textarea>
+          <div class="pane-content">
+            <div class="textarea-wrap">
+              <label for="jobTextInput" class="sr-only">Job Description Text</label>
+              <textarea id="jobTextInput" placeholder="Paste the job posting requirements, responsibilities, and preferred qualifications here..." rows="10"></textarea>
+            </div>
           </div>
 
-          <div class="card-footer">
-            <span class="char-count" id="jobCharCount">0 characters</span>
-            <button class="btn-text" id="clearJobBtn">Clear Job</button>
+          <div class="card-bottom">
+            <span class="counter-text" id="jobCharCount">0 characters</span>
+            <button type="button" class="btn-link" id="clearJobBtn">Clear</button>
           </div>
         </div>
       </div>
 
-
-      <div class="cta-center">
-        <button id="analyzeBtn" class="btn btn-primary btn-lg pulse-hover">
-          <span class="btn-icon">✨</span>
-          <span class="btn-label">Analyze Skill Gap & Generate Roadmap</span>
-          <div class="spinner-sm hidden" id="analyzeSpinner"></div>
+      <!-- Centered Primary Trigger -->
+      <div class="input-actions-center">
+        <button id="analyzeBtn" class="btn btn-primary btn-lg analyze-main-btn" type="button">
+          <span class="btn-text">Analyze Skill Gap</span>
+          <div class="spinner-sm hidden" id="analyzeSpinner" aria-label="Loading"></div>
         </button>
       </div>
     </section>
 
+    <!-- Clean Progress Modal (Clean sequence without fake hacker logs) -->
+    <div class="analysis-modal-overlay hidden" id="scanModal" role="dialog" aria-modal="true" aria-labelledby="scanModalTitle">
+      <div class="analysis-modal-card">
+        <div class="modal-header">
+          <h3 class="modal-title" id="scanModalTitle">Analyzing Role Fit</h3>
+          <p class="modal-subtitle" id="scanModalSubtitle">Evaluating candidate proficiencies against role requirements</p>
+        </div>
 
-    <!-- Realistic CV Scanning & Processing High-Tech Overlay Modal -->
-    <div class="scan-modal-overlay hidden" id="scanModal">
-      <div class="glass-card scan-modal-card">
-        <div class="scan-visual-wrapper">
-          <div class="scan-doc-graphic">
-            <div class="doc-line doc-line-lg"></div>
-            <div class="doc-line doc-line-md"></div>
-            <div class="doc-line doc-line-sm"></div>
-            <div class="doc-line doc-line-full"></div>
-            <div class="doc-line doc-line-md"></div>
-            <div class="hologram-beam"></div>
+        <!-- Clean 5-Stage Stepper -->
+        <div class="stepper-list" id="stepperList">
+          <div class="stepper-item" data-step="1">
+            <div class="stepper-indicator">1</div>
+            <div class="stepper-content">
+              <div class="stepper-label">Reading resume</div>
+              <div class="stepper-detail">Extracting candidate proficiencies &amp; technical stack</div>
+            </div>
           </div>
-          <div class="scan-radar-rings">
-            <div class="radar-ring r-1"></div>
-            <div class="radar-ring r-2"></div>
-            <div class="radar-ring r-3"></div>
+          <div class="stepper-item" data-step="2">
+            <div class="stepper-indicator">2</div>
+            <div class="stepper-content">
+              <div class="stepper-label">Comparing role requirements</div>
+              <div class="stepper-detail">Separating core requirements from preferred qualifications</div>
+            </div>
+          </div>
+          <div class="stepper-item" data-step="3">
+            <div class="stepper-indicator">3</div>
+            <div class="stepper-content">
+              <div class="stepper-label">Mapping skills</div>
+              <div class="stepper-detail">Normalizing taxonomy and detecting framework overlaps</div>
+            </div>
+          </div>
+          <div class="stepper-item" data-step="4">
+            <div class="stepper-indicator">4</div>
+            <div class="stepper-content">
+              <div class="stepper-label">Identifying gaps</div>
+              <div class="stepper-detail">Calculating weighted match score and critical gap hierarchy</div>
+            </div>
+          </div>
+          <div class="stepper-item" data-step="5">
+            <div class="stepper-indicator">5</div>
+            <div class="stepper-content">
+              <div class="stepper-label">Building roadmap</div>
+              <div class="stepper-detail">Generating 12-week phased milestones and capstone project</div>
+            </div>
           </div>
         </div>
 
-        <div class="scan-content">
-          <div class="scan-status-badge">
-            <span class="scan-pulsar"></span> AI Neural Analysis Engine Active
+        <!-- Subtle Progress Bar -->
+        <div class="modal-progress-wrap">
+          <div class="modal-progress-bar">
+            <div class="modal-progress-fill" id="scanProgressFill" style="width: 0%;"></div>
           </div>
-          <h3 class="scan-title" id="scanModalTitle">Deconstructing Candidate Credentials...</h3>
-          <p class="scan-subtitle" id="scanModalSubtitle">Running AST parsing, 500+ token classification & market benchmarking</p>
-
-          <div class="scan-progress-wrapper">
-            <div class="scan-progress-bar">
-              <div class="scan-progress-fill" id="scanProgressFill"></div>
-            </div>
-            <div class="scan-progress-labels">
-              <span id="scanStepLabel">Tokenizing syntax trees & framework proficiencies...</span>
-              <span id="scanPercentLabel">0%</span>
-            </div>
-          </div>
-
-          <div class="scan-log-terminal">
-            <div class="terminal-header">
-              <span class="term-dot red"></span>
-              <span class="term-dot yellow"></span>
-              <span class="term-dot green"></span>
-              <span class="term-title">intelligap-nlp-core.log</span>
-            </div>
-            <div class="terminal-body" id="scanLogBody">
-              <div class="log-entry log-active">› [0.1s] Initializing parsing workers and taxonomy indices...</div>
-            </div>
+          <div class="modal-progress-meta">
+            <span id="scanStepLabel">Reading resume...</span>
+            <span id="scanPercentLabel">0%</span>
           </div>
         </div>
+
+        <!-- Hidden container to preserve legacy JS bindings safely -->
+        <div id="scanLogBody" class="hidden"></div>
       </div>
     </div>
 
+    <!-- Results Section (Dashboard) -->
+    <section class="results-section hidden" id="dashboardSection">
 
-    <section class="dashboard-section hidden" id="dashboardSection">
-
-      <div class="dashboard-banner">
-        <div class="dashboard-headline">
-          <span class="badge badge-subtle">Analysis Results</span>
-          <h2 class="dashboard-title" id="resultsRoleTitle">Target Role Fit Assessment</h2>
-          <p class="dashboard-subtitle" id="candidateGreeting">Evaluating candidate profile against industry requirements</p>
+      <!-- Header & Export Actions -->
+      <div class="results-header-bar">
+        <div>
+          <div class="eyebrow-tag">Analysis Report</div>
+          <h2 class="results-role-title" id="resultsRoleTitle">Target Role Fit Assessment</h2>
+          <p class="results-meta-subtitle" id="candidateGreeting">Evaluating candidate profile against position requirements</p>
         </div>
-        <div class="dashboard-actions">
-          <button class="btn btn-outline btn-sm" id="exportMarkdownBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+        <div class="results-actions">
+          <button class="btn btn-secondary btn-sm" id="exportMarkdownBtn" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
             Export Roadmap (.md)
           </button>
-          <button class="btn btn-outline btn-sm" id="printReportBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-            Print Summary
+          <button class="btn btn-secondary btn-sm" id="printReportBtn" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            Print
           </button>
         </div>
       </div>
 
-
-      <div class="kpi-grid">
-
-        <div class="glass-card kpi-card match-dial-card">
-          <div class="kpi-label">Overall Match Score</div>
-          <div class="dial-container">
-            <svg class="progress-ring" width="140" height="140" viewBox="0 0 140 140">
-              <circle class="progress-ring-circle-bg" stroke-width="10" cx="70" cy="70" r="58"></circle>
-              <circle class="progress-ring-circle" id="scoreCircle" stroke-width="10" cx="70" cy="70" r="58"></circle>
-            </svg>
-            <div class="dial-value">
-              <span class="score-number" id="matchScoreVal">0</span><span class="score-percent">%</span>
+      <!-- Primary Match Score & Summary Cards -->
+      <div class="summary-grid">
+        <!-- Main Score Card -->
+        <div class="metric-card score-hero-card">
+          <div class="score-hero-layout">
+            <div class="score-radial-wrap">
+              <svg class="score-svg" width="128" height="128" viewBox="0 0 140 140">
+                <circle class="score-track" stroke-width="9" cx="70" cy="70" r="58"></circle>
+                <circle class="score-indicator" id="scoreCircle" stroke-width="9" cx="70" cy="70" r="58"></circle>
+              </svg>
+              <div class="score-number-wrap">
+                <span class="score-value" id="matchScoreVal">0</span><span class="score-unit">%</span>
+              </div>
             </div>
-          </div>
-          <div class="readiness-badge-wrap">
-            <span class="badge" id="readinessBadge">Evaluating...</span>
-          </div>
-        </div>
 
-
-        <div class="glass-card kpi-card">
-          <div class="kpi-label">Skill Breakdown</div>
-          <div class="skill-stats-list">
-            <div class="stat-row">
-              <span class="stat-dot dot-matched"></span>
-              <span class="stat-name">Matched Skills</span>
-              <span class="stat-count" id="matchedCount">0</span>
-            </div>
-            <div class="stat-row">
-              <span class="stat-dot dot-critical"></span>
-              <span class="stat-name">Critical Gaps (Required)</span>
-              <span class="stat-count" id="criticalCount">0</span>
-            </div>
-            <div class="stat-row">
-              <span class="stat-dot dot-secondary"></span>
-              <span class="stat-name">Secondary Gaps (Preferred)</span>
-              <span class="stat-count" id="secondaryCount">0</span>
-            </div>
-            <div class="stat-row">
-              <span class="stat-dot dot-extra"></span>
-              <span class="stat-name">Extra / Value-Add Skills</span>
-              <span class="stat-count" id="extraCount">0</span>
+            <div class="score-context">
+              <div class="score-label">ROLE MATCH</div>
+              <h3 class="score-status" id="readinessBadge">Evaluating Fit</h3>
+              <p class="score-explanation" id="strategicAdviceText">
+                Analyzing technical alignment between candidate competencies and job requirements.
+              </p>
             </div>
           </div>
         </div>
 
-
-        <div class="glass-card kpi-card">
-          <div class="kpi-label">Estimated Upskilling Pace</div>
-          <div class="upskilling-info">
-            <div class="big-metric" id="totalWeeksVal">12</div>
-            <div class="metric-unit">Weeks to Full Role Readiness</div>
-            <div class="effort-details">
-              <span>Total Effort: <strong id="totalHoursVal">160</strong> Hours</span>
-              <span>Avg Pace: <strong>12-15 hrs/week</strong></span>
+        <!-- Breakdown Metric Card -->
+        <div class="metric-card breakdown-card">
+          <h4 class="card-meta-title">Skills Breakdown</h4>
+          <div class="breakdown-list">
+            <div class="breakdown-item">
+              <span class="status-dot dot-matched"></span>
+              <span class="breakdown-label">Matched Skills</span>
+              <span class="breakdown-count" id="matchedCount">0</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="status-dot dot-critical"></span>
+              <span class="breakdown-label">Critical Gaps</span>
+              <span class="breakdown-count text-critical" id="criticalCount">0</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="status-dot dot-secondary"></span>
+              <span class="breakdown-label">Secondary Gaps</span>
+              <span class="breakdown-count text-secondary" id="secondaryCount">0</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="status-dot dot-extra"></span>
+              <span class="breakdown-label">Value-Add Skills</span>
+              <span class="breakdown-count" id="extraCount">0</span>
             </div>
           </div>
         </div>
 
-
-        <div class="glass-card kpi-card advice-card">
-          <div class="kpi-label">Strategic Recommendation</div>
-          <p class="advice-text" id="strategicAdviceText">Loading recommendation...</p>
-          <div class="advice-highlight">
-            <span class="bulb-icon">💡</span>
-            <span id="quickTipText">Focus first on Phase 1 core prerequisites to unlock the steepest score gains.</span>
+        <!-- Upskilling Pace Card -->
+        <div class="metric-card effort-card">
+          <h4 class="card-meta-title">Estimated Upskilling Pace</h4>
+          <div class="effort-big-number">
+            <span class="big-val" id="totalWeeksVal">12</span>
+            <span class="big-unit">Weeks</span>
           </div>
-        </div>
-      </div>
-
-
-      <div class="analytics-grid">
-
-        <div class="glass-card chart-card">
-          <div class="card-header">
-            <div>
-              <h3 class="card-heading">Skill Radar: Candidate vs Role Demand</h3>
-              <p class="card-subheading">Domain category proficiency comparison</p>
+          <div class="effort-details">
+            <div class="effort-row">
+              <span class="effort-subtext">Total Estimated Hours</span>
+              <strong id="totalHoursVal">160</strong>
+            </div>
+            <div class="effort-row">
+              <span class="effort-subtext">Recommended Velocity</span>
+              <strong>12–15 hrs/week</strong>
             </div>
           </div>
-          <div class="chart-wrapper">
-            <canvas id="radarChart" height="320"></canvas>
-          </div>
-        </div>
-
-
-        <div class="glass-card simulator-card" id="simulatorCard">
-          <div class="card-header">
-            <div>
-              <h3 class="card-heading">🔮 "What-If" Skill Simulator</h3>
-              <p class="card-subheading">Check off missing skills to simulate acquiring them & watch your match score update</p>
-            </div>
-            <div class="sim-badge" id="simScoreDelta">Base: 0%</div>
-          </div>
-
-          <div class="simulator-body">
-            <p class="sim-instruction">Click skills you are ready to learn to project your new score:</p>
-            <div class="sim-chips-container" id="simChipsContainer">
-
-            </div>
-          </div>
-
-          <div class="sim-footer">
-            <div class="sim-score-summary">
-              <span>Projected Match Score: </span>
-              <span class="sim-projected-score" id="simProjectedScore">0%</span>
-            </div>
-            <button class="btn btn-sm btn-ghost" id="resetSimBtn">Reset Simulator</button>
+          <div class="advice-callout" id="quickTipText">
+            Focus first on Phase 1 foundational requirements to achieve the highest immediate qualification gain.
           </div>
         </div>
       </div>
 
-
-      <!-- 2008 - 2026 Historical & Future Skill Demand Trajectory Engine -->
-      <div class="glass-card demand-trajectory-card" id="demandTrajectoryCard">
-        <div class="card-header demand-header">
+      <!-- Skill Gap Section (Tabs & Scannable Matrix) -->
+      <section class="section-block matrix-block">
+        <div class="block-header">
           <div>
-            <div class="heading-with-tag">
-              <h3 class="card-heading">📈 Global Tech Demand Trajectory (2008 – 2026)</h3>
-              <span class="special-badge badge-neon">⚡ Market Intelligence</span>
-            </div>
-            <p class="card-subheading">Year-by-year demand curve (0–100 scale), historical milestones & 2026 forecast for ANY skill</p>
+            <h3 class="block-title">Skill Gap Analysis</h3>
+            <p class="block-subtitle">Detailed categorization of existing qualifications versus position requirements.</p>
           </div>
 
-          <div class="demand-search-box">
-            <div class="search-input-wrap">
-              <span class="search-icon">🔍</span>
-              <input type="text" id="customSkillSearchInput" placeholder="Search or track ANY skill (e.g. LangChain, Rust, Next.js, DuckDB)..." autocomplete="off">
-              <button class="btn btn-sm btn-primary" id="trackCustomSkillBtn" type="button">Track Trend</button>
-            </div>
+          <div class="matrix-tabs-bar" id="matrixTabs" role="tablist">
+            <button class="matrix-tab active" data-tab="all" type="button" role="tab">All Skills</button>
+            <button class="matrix-tab" data-tab="critical" type="button" role="tab">Critical Gaps (<span id="tabCritCount">0</span>)</button>
+            <button class="matrix-tab" data-tab="secondary" type="button" role="tab">Secondary Gaps (<span id="tabSecCount">0</span>)</button>
+            <button class="matrix-tab" data-tab="matched" type="button" role="tab">Matched (<span id="tabMatchCount">0</span>)</button>
+            <button class="matrix-tab" data-tab="extra" type="button" role="tab">Value-Add (<span id="tabExtraCount">0</span>)</button>
           </div>
         </div>
 
-        <div class="demand-pills-bar">
-          <span class="pills-label">Quick Analyze:</span>
-          <div class="demand-quick-pills" id="demandQuickPills">
-            <!-- Dynamically populated with role skills + top technologies -->
-          </div>
-        </div>
-
-        <div class="demand-chart-grid">
-          <div class="demand-chart-container">
-            <div class="chart-wrapper">
-              <canvas id="demandLineChart" height="280"></canvas>
-            </div>
-          </div>
-
-          <div class="demand-meta-panel" id="demandMetaPanel">
-            <div class="meta-skill-title-row">
-              <h4 class="meta-skill-name" id="demandMetaSkillName">Python</h4>
-              <span class="badge badge-accent" id="demandMetaStatus">Global Standard #1</span>
-            </div>
-            <div class="demand-kpis-row">
-              <div class="demand-kpi-box">
-                <span class="kpi-micro-label">2026 Market Demand</span>
-                <span class="kpi-big-num text-cyan" id="demandMetaCurrentScore">99<small>/100</small></span>
-              </div>
-              <div class="demand-kpi-box">
-                <span class="kpi-micro-label">Peak Year</span>
-                <span class="kpi-big-num" id="demandMetaPeakYear">2026</span>
-              </div>
-              <div class="demand-kpi-box">
-                <span class="kpi-micro-label">YoY Velocity</span>
-                <span class="kpi-big-num text-success" id="demandMetaGrowth">+14.2%</span>
-              </div>
-            </div>
-
-            <div class="demand-insight-box">
-              <div class="insight-label">💡 Industry Outlook & Tech Placement:</div>
-              <p class="insight-text" id="demandMetaInsight">Dominates AI/ML, data engineering, and automation; unmatched surge from 2018 onwards driven by Deep Learning and GenAI.</p>
-              <div class="milestone-text">
-                <strong>Key Milestone:</strong> <span id="demandMetaMilestone">2023–2026: Official lingua franca of the Generative AI revolution.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="glass-card matrix-section">
-        <div class="card-header matrix-header">
-          <div>
-            <h3 class="card-heading">Comprehensive Skill Gap Matrix</h3>
-            <p class="card-subheading">Categorized breakdown of existing qualifications vs required competencies</p>
-          </div>
-
-
-          <div class="matrix-tabs" id="matrixTabs">
-            <button class="matrix-tab active" data-tab="all">All Skills</button>
-            <button class="matrix-tab" data-tab="critical">Critical Gaps (<span id="tabCritCount">0</span>)</button>
-            <button class="matrix-tab" data-tab="secondary">Secondary Gaps (<span id="tabSecCount">0</span>)</button>
-            <button class="matrix-tab" data-tab="matched">Matched (<span id="tabMatchCount">0</span>)</button>
-            <button class="matrix-tab" data-tab="extra">Extra Skills (<span id="tabExtraCount">0</span>)</button>
-          </div>
-        </div>
-
+        <!-- Clean, scannable skill matrix grid -->
         <div class="matrix-grid" id="matrixGrid">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </section>
 
+      <!-- Middle Two-Column: What-If Simulator & Technical Radar -->
+      <div class="split-analytics-grid">
+        <!-- Interactive Simulator Module -->
+        <div class="card-module simulator-module" id="simulatorCard">
+          <div class="module-header">
+            <div>
+              <h3 class="module-title">What happens if you learn these skills?</h3>
+              <p class="module-subtitle">Select missing competencies below to project your revised qualification score in real time.</p>
+            </div>
+            <button class="btn btn-ghost btn-xs" id="resetSimBtn" type="button">Reset</button>
+          </div>
+
+          <div class="simulator-chips-wrap" id="simChipsContainer">
+            <!-- Simulated skill chips -->
+          </div>
+
+          <div class="simulator-score-panel">
+            <div class="sim-score-col">
+              <span class="sim-label">Projected Match</span>
+              <span class="sim-number" id="simProjectedScore">0%</span>
+            </div>
+            <div class="sim-delta-badge" id="simScoreDelta">Base: 0%</div>
+          </div>
+        </div>
+
+        <!-- Domain Alignment Radar Chart -->
+        <div class="card-module radar-module">
+          <div class="module-header">
+            <div>
+              <h3 class="module-title">Domain Proficiency Alignment</h3>
+              <p class="module-subtitle">Candidate qualifications versus role requirements across core technical areas.</p>
+            </div>
+          </div>
+          <div class="radar-chart-container">
+            <canvas id="radarChart" height="280"></canvas>
+          </div>
         </div>
       </div>
 
-
-      <div class="roadmap-section">
-        <div class="section-title-wrap">
-          <span class="badge badge-accent">Actionable Trajectory</span>
-          <h2 class="section-title">Personalized 12-Week Learning Roadmap</h2>
-          <p class="section-subtitle">Structured, phased milestones designed to systematically eliminate skill gaps and prepare you for interviews</p>
+      <!-- 12-Week Roadmap Section -->
+      <section class="section-block roadmap-block">
+        <div class="block-header">
+          <div>
+            <div class="eyebrow-tag">Execution Plan</div>
+            <h3 class="block-title">Personalized 12-Week Learning Roadmap</h3>
+            <p class="block-subtitle">A structured, four-phase plan designed to systematically eliminate skill gaps and prepare for technical interviews.</p>
+          </div>
         </div>
 
-        <div class="timeline-container" id="timelineContainer">
+        <!-- Horizontal on desktop, vertical on mobile -->
+        <div class="timeline-container horizontal-timeline" id="timelineContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
 
+      <!-- Market Intelligence (Skill Market Context) -->
+      <section class="section-block market-context-block" id="demandTrajectoryCard">
+        <div class="block-header">
+          <div>
+            <div class="eyebrow-tag">Industry Insights</div>
+            <h3 class="block-title">Skill Market Context</h3>
+            <p class="block-subtitle">Historical adoption curves (2008–2026), current market demand, and long-term tech momentum.</p>
+          </div>
+
+          <div class="demand-search-wrap">
+            <label for="customSkillSearchInput" class="sr-only">Search Skill Market Context</label>
+            <input type="text" id="customSkillSearchInput" placeholder="Inspect skill demand (e.g. Docker, TypeScript)..." autocomplete="off">
+            <button class="btn btn-secondary btn-sm" id="trackCustomSkillBtn" type="button">Track</button>
+          </div>
         </div>
 
+        <div class="demand-pills-row">
+          <span class="pills-label">Quick Select:</span>
+          <div class="demand-quick-pills" id="demandQuickPills">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
 
-        <div class="glass-card capstone-card" id="capstoneCard">
-          <div class="capstone-badge">🏆 Flagship Showcase</div>
-          <h3 class="capstone-title" id="capstoneTitle">Full-Stack Capstone Project</h3>
-          <p class="capstone-desc" id="capstoneDesc">A production-grade application integrating your new competencies.</p>
+        <div class="demand-content-grid">
+          <div class="demand-chart-box">
+            <div class="chart-canvas-wrap">
+              <canvas id="demandLineChart" height="260"></canvas>
+            </div>
+          </div>
 
-          <div class="deliverables-box">
-            <h4>Recommended Capstone Deliverables:</h4>
-            <ul id="capstoneDeliverablesList">
+          <div class="demand-meta-box" id="demandMetaPanel">
+            <div class="meta-header">
+              <h4 class="meta-skill-title" id="demandMetaSkillName">Python</h4>
+              <span class="meta-status-pill" id="demandMetaStatus">High Demand</span>
+            </div>
 
+            <div class="meta-stats-row">
+              <div class="meta-stat">
+                <span class="meta-stat-label">Current Demand</span>
+                <span class="meta-stat-val text-accent" id="demandMetaCurrentScore">99<small>/100</small></span>
+              </div>
+              <div class="meta-stat">
+                <span class="meta-stat-label">Peak Year</span>
+                <span class="meta-stat-val" id="demandMetaPeakYear">2026</span>
+              </div>
+              <div class="meta-stat">
+                <span class="meta-stat-label">YoY Momentum</span>
+                <span class="meta-stat-val text-success" id="demandMetaGrowth">+14.2%</span>
+              </div>
+            </div>
+
+            <div class="meta-notes">
+              <div class="meta-note-label">Market Perspective</div>
+              <p class="meta-note-text" id="demandMetaInsight">Dominates data engineering and backend services, supported by continued industry adoption.</p>
+              <div class="meta-milestone-text">
+                <strong>Inflection Point:</strong> <span id="demandMetaMilestone">2023–2026: Standard foundation across modern infrastructure and services.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Capstone Project Section -->
+      <section class="section-block capstone-block" id="capstoneCard">
+        <div class="capstone-container">
+          <div class="capstone-intro">
+            <div class="eyebrow-tag">Recommended Showcase</div>
+            <h3 class="capstone-title" id="capstoneTitle">Full-Stack Capstone Project</h3>
+            <p class="capstone-desc" id="capstoneDesc">A production-grade application integrating your newly acquired competencies into an interview-ready portfolio piece.</p>
+
+            <div class="capstone-meta-tags">
+              <span class="cap-tag"><strong>Difficulty:</strong> Advanced</span>
+              <span class="cap-tag"><strong>Estimated Duration:</strong> 4 Weeks</span>
+              <span class="cap-tag"><strong>Outcome:</strong> Public Repository &amp; Live Deployment</span>
+            </div>
+
+            <div class="capstone-cta-wrap">
+              <button class="btn btn-primary btn-sm" id="viewProjectPlanBtn" type="button">View Project Plan</button>
+            </div>
+          </div>
+
+          <div class="capstone-deliverables-panel">
+            <h4 class="deliverables-heading">Key Project Deliverables</h4>
+            <ul class="deliverables-list" id="capstoneDeliverablesList">
+              <!-- Rendered via JS -->
             </ul>
           </div>
         </div>
-      </div>
+      </section>
+
+      <!-- Career Strategy & Deep Dive (AI Insights Module - restrained & clean) -->
+      <section class="section-block ai-strategy-block" id="aiInsightsSection">
+        <div class="block-header">
+          <div>
+            <div class="eyebrow-tag">Strategy &amp; Guidance</div>
+            <h3 class="block-title">Career Strategy &amp; Skill Deep Dive</h3>
+            <p class="block-subtitle">Generate tailored interview strategies, detailed study schedules, or drill into specific competency requirements.</p>
+          </div>
+        </div>
+
+        <div class="ai-toolbar">
+          <button class="btn btn-secondary btn-sm" id="aiCareerAdviceBtn" type="button">
+            <span>Career Strategy</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" id="aiRoadmapBtn" type="button">
+            <span>Detailed Study Plan</span>
+          </button>
+          <div class="skill-search-form">
+            <label for="aiSkillDiveInput" class="sr-only">Skill for Deep Dive</label>
+            <input type="text" id="aiSkillDiveInput" placeholder="Skill deep dive (e.g. Kubernetes)..." class="ai-input" />
+            <button class="btn btn-secondary btn-sm" id="aiSkillDiveBtn" type="button">Deep Dive</button>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="ai-loading-box hidden" id="aiLoading">
+          <div class="spinner-sm"></div>
+          <span class="ai-loading-text">Generating tailored strategic advice...</span>
+        </div>
+
+        <!-- Results Display -->
+        <div class="ai-results-panel hidden" id="aiResultsContainer">
+          <div class="ai-results-header">
+            <h4 class="ai-results-title" id="aiResultTitle">Strategic Findings</h4>
+            <button class="btn-close" id="aiCloseBtn" type="button" aria-label="Close findings">✕</button>
+          </div>
+          <div class="ai-results-body" id="aiResultBody">
+            <!-- Dynamic output -->
+          </div>
+        </div>
+      </section>
+
     </section>
+
   </main>
 
+  <!-- Notification Toast Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
-  <div class="toast-container" id="toastContainer"></div>
-
-
+  <!-- Professional Minimal Footer -->
   <footer class="app-footer">
     <div class="footer-container">
-      <div class="footer-bolt-badge">⚡ IntelliGap Engine</div>
-      <p class="footer-credit">
-        made by akshay <span class="live-heart" title="Live Beating Heart" aria-label="live heart" role="img">❤️</span>
-      </p>
-      <p class="footer-subtext">AI-Powered Skill Gap Analysis & Adaptive Career Roadmap Engine</p>
+      <div class="footer-brand-col">
+        <div class="footer-logo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span>IntelliGap</span>
+        </div>
+        <p class="footer-desc">
+          Intelligent developer skill-gap analysis, match scoring, and personalized technical career roadmaps.
+        </p>
+      </div>
+
+      <div class="footer-nav-col">
+        <span class="footer-col-title">Product</span>
+        <a href="#inputSection" class="footer-link">Skill Gap Analyzer</a>
+        <a href="#howItWorks" class="footer-link">How it Works</a>
+        <a href="#dashboardSection" class="footer-link">Roadmap Generator</a>
+        <a href="#demandTrajectoryCard" class="footer-link">Market Context</a>
+      </div>
+
+      <div class="footer-nav-col">
+        <span class="footer-col-title">Resources</span>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-link">Documentation</a>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-link">Supported Taxonomy</a>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub Repository</a>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <p class="footer-copy">© 2026 IntelliGap. Designed for technical professionals and engineering teams.</p>
+      </div>
     </div>
   </footer>
-
 
   <script src="/static/app.js"></script>
 </body>

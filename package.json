@@ -1,0 +1,10 @@
+{
+  "name": "skill-gap-analyzer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Intelligent Skill Gap Analyzer & AI Career Roadmap Engine",
+  "scripts": {
+    "dev": "backend\\venv\\Scripts\\python.exe -m uvicorn app.main:app --app-dir backend --reload --port 8000",
+    "start": "backend\\venv\\Scripts\\python.exe -m uvicorn app.main:app --app-dir backend --port 8000"
+  }
+}

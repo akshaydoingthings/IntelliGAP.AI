@@ -17,6 +17,13 @@ from .gap_analyzer import analyze_skill_gap, simulate_skill_acquisition
 from .roadmap_generator import generate_personalized_roadmap, export_roadmap_to_markdown
 from .presets import get_all_presets, get_preset_by_id
 from .taxonomy import get_skill_demand_trajectory, infer_skill_metadata, resolve_skill_name
+from .ai_service import (
+    ai_career_advice,
+    ai_learning_roadmap,
+    ai_skill_deep_dive,
+    ai_extract_skills,
+    is_ai_available,
+)
 
 app = FastAPI(
     title="Intelligent Skill Gap Analyzer API",
@@ -48,10 +55,26 @@ class AiAnalyzeSkillRequest(BaseModel):
     skill: str
     target_role: Optional[str] = "Target Role"
 
+class AiInsightsRequest(BaseModel):
+    matched_skills: List[str]
+    missing_skills: List[str]
+    extra_skills: List[str] = []
+    job_title: str = "Target Role"
+    match_score: float = 0.0
+
+class AiRoadmapRequest(BaseModel):
+    missing_skills: List[str]
+    matched_skills: List[str]
+    job_title: str = "Target Role"
+
+class AiSkillDeepDiveRequest(BaseModel):
+    skill: str
+    target_role: str = "Target Role"
+
 
 @app.get("/api/health")
 def health_check():
-    return {"status": "ok", "service": "Intelligent Skill Gap Analyzer"}
+    return {"status": "ok", "service": "Intelligent Skill Gap Analyzer", "ai_enabled": is_ai_available()}
 
 
 @app.get("/api/presets")
@@ -169,6 +192,75 @@ def simulate(payload: SimulateRequest):
         job_data=job_data
     )
     return simulated_result
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# AI-Powered Endpoints (OpenRouter)
+# ──────────────────────────────────────────────────────────────────────────────
+
+@app.get("/api/ai-status")
+def ai_status():
+    """Check if AI features are available (API key configured)."""
+    return {"ai_enabled": is_ai_available()}
+
+
+@app.post("/api/ai-career-advice")
+async def get_ai_career_advice(payload: AiInsightsRequest):
+    """Generate AI-powered personalized career advice."""
+    if not is_ai_available():
+        raise HTTPException(status_code=503, detail="AI features unavailable. Configure OPENROUTER_API_KEY in ~/.env")
+
+    result = await ai_career_advice(
+        matched_skills=payload.matched_skills,
+        missing_skills=payload.missing_skills,
+        extra_skills=payload.extra_skills,
+        job_title=payload.job_title,
+        match_score=payload.match_score,
+    )
+
+    if result is None:
+        raise HTTPException(status_code=502, detail="AI service returned an invalid response. Please try again.")
+
+    return result
+
+
+@app.post("/api/ai-roadmap")
+async def get_ai_roadmap(payload: AiRoadmapRequest):
+    """Generate AI-powered detailed learning roadmap."""
+    if not is_ai_available():
+        raise HTTPException(status_code=503, detail="AI features unavailable. Configure OPENROUTER_API_KEY in ~/.env")
+
+    result = await ai_learning_roadmap(
+        missing_skills=payload.missing_skills,
+        matched_skills=payload.matched_skills,
+        job_title=payload.job_title,
+    )
+
+    if result is None:
+        raise HTTPException(status_code=502, detail="AI service returned an invalid response. Please try again.")
+
+    return result
+
+
+@app.post("/api/ai-skill-deep-dive")
+async def get_ai_skill_deep_dive(payload: AiSkillDeepDiveRequest):
+    """Get AI-powered deep analysis of a specific skill."""
+    if not is_ai_available():
+        raise HTTPException(status_code=503, detail="AI features unavailable. Configure OPENROUTER_API_KEY in ~/.env")
+
+    skill_name = payload.skill.strip()
+    if not skill_name:
+        raise HTTPException(status_code=400, detail="Skill name cannot be empty.")
+
+    result = await ai_skill_deep_dive(
+        skill_name=skill_name,
+        target_role=payload.target_role,
+    )
+
+    if result is None:
+        raise HTTPException(status_code=502, detail="AI service returned an invalid response. Please try again.")
+
+    return result
 
 
 FRONTEND_DIR = Path(__file__).resolve().parent.parent.parent / "frontend"
