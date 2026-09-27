@@ -1,5 +1,5 @@
-<h1 align="center">Hi 👋, I'm Adam Pithenwala</h1>
-<h3 align="center">Student at MITS, Gwalior 🌟</h3>
+<h1 align="center">Hi 👋, I'm Akshay Kumar</h1>
+<h3 align="center">Student at CU, 🌟</h3>
 
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=adam-pw&label=Profile%20views&color=0e75b6&style=flat" alt="Profile Views" />
