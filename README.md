@@ -1,112 +1,81 @@
-<h1 align="center">Hi 👋, I'm Akshay Kumar</h1>
-<h3 align="center">Student at CU, 🌟</h3>
+<h1 align="center">Hi 👋, I'm Akshay</h1>
+<h3 align="center">Student Developer · Building AI-powered career tools 🚀</h3>
 
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=adam-pw&label=Profile%20views&color=0e75b6&style=flat" alt="Profile Views" />
-</p>
+<br/>
 
-<p align="center">
-  <img src="https://github.com/Adam-pw/Adam-pw/blob/main/animation_500_kxa883sd.gif" alt="Adam Pithenwala Animation" width="300" />
-</p>
+<p align="right"><h3>Profile Views :-</h3>
+<img src="https://komarev.com/ghpvc/?username=akshaydoingthings&label=Profile%20views&color=0e75b6&style=flat" alt="akshaydoingthings" /></p>
 
-### 👨‍💻 About Me
+<br/>
 
-- 🌱 I’m currently learning **Web Development** and other programming languages.
-- 📫 How to reach me: **[adampithewan@gmail.com](mailto:adampithewan@gmail.com)**
-- ⚡ Fun fact: *Food and Music 🎵 are the reasons to live.*
+<p><img align="right" src="https://github.com/Adam-pw/Adam-pw/blob/main/animation_500_kxa883sd.gif" alt="coding animation" width="380"/></p>
 
----
+<ul>
+  <li>
+    <p>🌱 I'm currently learning <strong>Full-Stack Development, AI/ML integrations, and developer tooling</strong></p>
+  </li>
+  <li>
+    <p>🔭 I'm currently working on <a href="https://github.com/akshaydoingthings/IntelliGAP.AI"><strong>IntelliGAP.AI</strong></a> — an AI-powered career skill-gap analyzer &amp; roadmap engine</p>
+  </li>
+  <li>
+    <p>💬 Ask me about <strong>Python, FastAPI, Vanilla JS, NLP, and resume parsing</strong></p>
+  </li>
+  <li>
+    <p>📫 How to reach me: open an issue or discussion on this repo!</p>
+  </li>
+  <li>
+    <p>⚡ Fun fact: I built a full AI career tool with <strong>zero frontend frameworks</strong> — just semantic HTML, Vanilla CSS &amp; JS.</p>
+  </li>
+</ul>
 
-### 🌐 Connect with Me
-
-<p align="left">
-  <a href="https://www.linkedin.com/in/adam-pithewan/" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" height="30" width="40" /></a>
-  <a href="https://fb.com/adam pithen wala" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="Facebook" height="30" width="40" /></a>
-  <a href="https://instagram.com/_._.adam._" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="Instagram" height="30" width="40" /></a>
-  <a href="https://www.hackerrank.com/adampithewan" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/hackerrank.svg" alt="HackerRank" height="30" width="40" /></a>
-  <a href="https://twitter.com/adam_pithenwala" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="Twitter" height="30" width="40" /></a>
-</p>
-
----
-
-### 🛠️ Languages and Tools
-
-<p align="left">
-  <a href="https://developer.android.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android" width="40" height="40" /></a>
-  <a href="https://getbootstrap.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg" alt="bootstrap" width="40" height="40" /></a>
-  <a href="https://www.cprogramming.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" width="40" height="40" /></a>
-  <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="cplusplus" width="40" height="40" /></a>
-  <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40" /></a>
-  <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40" /></a>
-  <a href="https://www.adobe.com/in/products/illustrator.html" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/adobe_illustrator/adobe_illustrator-icon.svg" alt="illustrator" width="40" height="40" /></a>
-  <a href="https://www.java.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40" /></a>
-  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40" /></a>
-  <a href="https://kotlinlang.org" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" alt="kotlin" width="40" height="40" /></a>
-  <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40" /></a>
-  <a href="https://nodejs.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40" /></a>
-  <a href="https://pandas.pydata.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/pandas/pandas-original.svg" alt="pandas" width="40" height="40" /></a>
-  <a href="https://www.photoshop.com/en" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/photoshop/photoshop-line.svg" alt="photoshop" width="40" height="40" /></a>
-  <a href="https://www.python.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40" /></a>
-  <a href="https://reactjs.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40" /></a>
-  <a href="https://sass-lang.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/sass/sass-original.svg" alt="sass" width="40" height="40" /></a>
-</p>
+<br clear="both"/>
 
 ---
 
-### 📊 Statistical Data
+# 🚀 IntelliGAP.AI — Intelligent Skill Gap Analyzer & Career Roadmap Engine
+
+> An end-to-end AI developer tool that analyzes technical resumes against target job postings, computes role-fit match scores, isolates critical competency gaps, and builds actionable **12-week personalized learning roadmaps**.
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=adam-pw&show_icons=true&locale=en&bg_color=0d1117&text_color=ffffff&layout=compact" alt="Top Languages" />
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI"/>
+  <img src="https://img.shields.io/badge/Vanilla_JS-ES6+-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript"/>
+  <img src="https://img.shields.io/badge/Chart.js-FF6384?style=flat-square&logo=chartdotjs&logoColor=white" alt="Chart.js"/>
+  <img src="https://img.shields.io/badge/OpenRouter-AI-8B5CF6?style=flat-square" alt="OpenRouter"/>
+  <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="MIT License"/>
 </p>
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=adam-pw&show_icons=true&locale=en&bg_color=0d1117&text_color=ffffff&repo=convoychat" alt="GitHub Stats" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Adam-pw&theme=dark&background=0d1117&date_format=M%20j%5B%2C%20Y%5D" alt="GitHub Streak" />
-</p>
-
-<p align="center">
-  <a href="https://github.com/Adam-pw"><strong>👤 GitHub Profile: @Adam-pw</strong></a>
-</p>
-
-<br>
 
 ---
-
-# 🚀 Featured Project: IntelliGap — Intelligent Skill Gap Analyzer & Career Roadmap Engine
-
-An end-to-end developer tool that analyzes technical resumes against target job postings, computes role-fit match scores, isolates critical competency gaps, and builds actionable 12-week learning roadmaps.
 
 ## 🌟 Key Features
 
-- **Developer Tool Aesthetic**: Redesigned with the restraint, clarity, and typographic discipline of modern developer products (Linear, Vercel, Stripe).
-- **Two-Column Input System**: Equal-weight visual intake for candidate credentials (upload `.pdf`, `.docx`, `.txt` or paste) and target job specifications.
-- **5-Stage Clean Analysis Stepper**: Transparent step progression (*Reading resume → Comparing requirements → Mapping skills → Identifying gaps → Building roadmap*).
-- **Match Score & Gap Breakdown**: Prominent role match percentage gauge accompanied by counts for matched skills, critical gaps, secondary gaps, and value-add competencies.
-- **Interactive "What-If" Simulator**: Live toggle for missing skills showing real-time projected match score gains.
-- **Domain Proficiency Radar**: Multi-axis technical alignment comparison across Languages, Frontend, Backend, Cloud/DevOps, Database, and AI/ML.
-- **Personalized 12-Week Roadmap**: Horizontal phased timeline on desktop (vertical on mobile) covering Foundations, Core Skills, Applied Projects, and Interview Readiness with milestone checklists and curated documentation links.
-- **Skill Market Context**: Historical and projected technology demand trajectories (2008–2026) with YoY momentum tracking and search capability.
-- **Flagship Capstone Blueprint**: Production-grade project specification with deliverables and direct roadmap integration.
-- **Theme Support**: High-contrast dark mode and paper light mode.
+| Feature | Description |
+|---|---|
+| 📄 **Resume Intake** | Upload `.pdf`, `.docx`, `.txt` or paste raw text |
+| 🎯 **Match Scoring** | Role-fit percentage with matched vs. gap breakdown |
+| 🔍 **5-Stage Analysis Stepper** | *Reading → Comparing → Mapping → Gaps → Roadmap* |
+| 🧪 **"What-If" Simulator** | Live skill toggle showing projected match score gains |
+| 📡 **Domain Radar Chart** | Multi-axis technical proficiency vs. job requirements |
+| 🗺️ **12-Week Roadmap** | Phased milestones: Foundations → Core → Applied → Interview |
+| 📈 **Market Demand Insights** | Historical & projected tech skill trajectories (2008–2026) |
+| 🏗️ **Capstone Blueprint** | Production-grade project spec with skills & deliverables |
+| 🌙 **Dark / Light Theme** | High-contrast dark mode & paper light mode |
 
 ---
 
 ## 🛠️ Architecture & Tech Stack
 
-### **Backend**
+### Backend
 - **Framework**: [FastAPI](https://fastapi.tiangolo.com/) (Python 3.10+)
-- **NLP & Taxonomy**: RapidFuzz fuzzy matching, regular expressions, and curated 500+ tech taxonomy
-- **AI Integrations**: OpenRouter / GPT-4o async client for deep dive analysis and career strategy
+- **NLP & Taxonomy**: RapidFuzz fuzzy matching + curated 500+ skill taxonomy
+- **AI Integration**: OpenRouter / GPT-4o async client for deep career analysis
 - **Server**: Uvicorn ASGI with hot reload
 
-### **Frontend**
-- **Core**: Semantic HTML5, Vanilla ES6+ JavaScript
-- **Styling**: Vanilla CSS3 design system with CSS custom properties (no external framework bloat)
+### Frontend
+- **Core**: Semantic HTML5 + Vanilla ES6+ JavaScript *(zero framework bloat)*
+- **Styling**: Vanilla CSS3 with custom properties, inspired by Linear / Vercel
 - **Typography**: Inter & JetBrains Mono (Google Fonts)
-- **Data Visualization**: Chart.js for radar charts and demand curves
+- **Charts**: Chart.js for radar & demand curve visualizations
 
 ---
 
@@ -118,56 +87,69 @@ skill-gap-analyzer/
 │   ├── app/
 │   │   ├── main.py              # FastAPI endpoints & static file serving
 │   │   ├── nlp_extractor.py     # Resume extraction & skill parser
-│   │   ├── taxonomy.py          # 500+ skill taxonomy & historical trajectories
+│   │   ├── taxonomy.py          # 500+ skill taxonomy & demand trajectories
 │   │   ├── gap_analyzer.py      # Match scoring & gap categorization
 │   │   ├── roadmap_generator.py # 12-week roadmap & capstone generator
 │   │   ├── presets.py           # Benchmark role profiles & personas
-│   │   └── ai_service.py        # OpenRouter AI career intelligence service
+│   │   └── ai_service.py        # OpenRouter AI career intelligence
 │   ├── tests/
 │   │   └── test_all.py          # Pytest test suite
-│   ├── requirements.txt         # Python dependencies
-│   └── venv/                    # Virtual environment
+│   ├── requirements.txt
+│   └── venv/
 ├── frontend/
-│   ├── index.html               # Semantic UI with 5-stage stepper & results view
-│   ├── styles.css               # Developer-focused modern CSS design system
-│   ├── app.js                   # Reactive UI logic, Chart.js integrations & API calls
-│   └── package.json             # Frontend package metadata
-├── input_validation.c           # Input validation utility
-├── package.json                 # Project root package configuration
-└── README.md                    # Project & Author documentation
+│   ├── index.html               # Semantic UI — 5-stage stepper & results dashboard
+│   ├── styles.css               # Developer-focused CSS design system
+│   ├── app.js                   # Reactive UI logic, Chart.js & API calls
+│   └── package.json
+├── package.json                 # Root npm scripts
+└── README.md
 ```
 
 ---
 
-## 🚀 Quickstart & Setup
+## 🚀 Quickstart
 
-### 1. Prerequisites
-- Python 3.10 or higher
-- Node.js & npm (optional, for scripts)
+### Prerequisites
+- Python 3.10+
 - Git
 
-### 2. Run the Application
-
-From the project root:
+### Run the App
 
 ```bash
-# Start backend server with frontend mounted
+# Clone the repo
+git clone https://github.com/akshaydoingthings/IntelliGAP.AI.git
+cd IntelliGAP.AI
+
+# Create & activate virtualenv
+python -m venv backend/venv
+backend\venv\Scripts\activate       # Windows
+# source backend/venv/bin/activate  # macOS/Linux
+
+# Install dependencies
+pip install -r backend/requirements.txt
+
+# Start the server
 python -m uvicorn app.main:app --app-dir backend --reload --port 8000
 ```
 
-Or using npm:
+Or with npm:
 ```bash
 npm run dev
 ```
 
-### 3. Open in Browser
+### Open in Browser
 
-Visit **[http://127.0.0.1:8000](http://127.0.0.1:8000)** to interact with IntelliGap.
-
-Interactive API documentation is available at **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)**.
+- **App** → [http://127.0.0.1:8000](http://127.0.0.1:8000)
+- **API Docs** → [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 ---
 
+## 🤝 Connect
+
+<p align="left">
+<a href="https://github.com/akshaydoingthings" target="_blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="GitHub" height="30" width="40" /></a>
+</p>
+
 <p align="center">
-  Crafted by <a href="https://github.com/Adam-pw"><strong>Adam Pithenwala</strong></a> • Student at MITS, Gwalior
+  Crafted with ❤️ by <a href="https://github.com/akshaydoingthings"><strong>Akshay</strong></a>
 </p>
