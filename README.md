@@ -146,10 +146,29 @@ npm run dev
 
 ## 🤝 Connect
 
-<p align="left">
-<a href="https://github.com/akshaydoingthings" target="_blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="GitHub" height="30" width="40" /></a>
+<p align="center">
+  <!-- GitHub -->
+  <a href="https://github.com/akshaydoingthings" target="_blank">
+    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="GitHub" height="30" width="40" style="margin: 0 5px;" />
+  </a>
+  
+  <!-- LinkedIn -->
+  <a href="https://www.linkedin.com/in/akshay-kumar-a65b7136a/" target="_blank">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvyBA7gYLHixYyF-rcMDZ8L_Ar_23174MP5zfz0lYCcA&s=10" alt="LinkedIn" height="30" width="40" style="margin: 0 5px;" />
+  </a>
+
+  <!-- HackerRank -->
+  <a href="https://www.hackerrank.com/profile/axshaykumar" target="_blank">
+    <img src="https://avatars.githubusercontent.com/u/7596827?v=4" alt="HackerRank" height="30" width="40" style="margin: 0 5px;" />
+  </a>
+
+  <!-- CodeChef -->
+  <a href="https://www.codechef.com/users/axshaykumar" target="_blank">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF6Kpi1GlEsDq1LHWhAvDouFzYo1FGfZ8WUeJb41jYQQ&s=10" alt="CodeChef" height="30" width="40" style="margin: 0 5px;" />
+  </a>
 </p>
 
 <p align="center">
-  Crafted with ❤️ by <a href="https://github.com/akshaydoingthings"><strong>Akshay</strong></a>
+  Crafted with ❤️ by <a href="https://github.com/akshaydoingthings" target="_blank">Akshay</a>
 </p>
+
