@@ -176,5 +176,6 @@ npm run dev
 </p>
 
 <p align="center">
-  Crafted with ❤️ by <a href="https://github.com/akshaydoingthings"><strong>Akshay</strong></a>
+  Crafted with ❤️ by <a href="https://github.com/akshaydoingthings" target="_blank">Akshay</a>
 </p>
+
