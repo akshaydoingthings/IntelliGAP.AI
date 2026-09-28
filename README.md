@@ -3,8 +3,10 @@
 
 <br/>
 
-<p align="right"><h3>Profile Views :-</h3>
-<img src="https://komarev.com/ghpvc/?username=akshaydoingthings&label=Profile%20views&color=0e75b6&style=flat" alt="akshaydoingthings" /></p>
+<div align="right">
+  <h3>Profile Views :-</h3>
+  <img src="https://komarev.com/ghpvc/?username=akshaydoingthings&label=Profile%20views&color=0e75b6&style=flat" alt="akshaydoingthings" />
+</div>
 
 <br/>
 
@@ -147,7 +149,30 @@ npm run dev
 ## 🤝 Connect
 
 <p align="left">
-<a href="https://github.com/akshaydoingthings" target="_blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="GitHub" height="30" width="40" /></a>
+  <!-- GitHub (kept as-is) -->
+  <a href="https://github.com/akshaydoingthings" target="_blank">
+    <img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="GitHub" height="30" width="40" />
+  </a>
+  &nbsp;
+  <!-- LinkedIn -->
+  <a href="https://linkedin.com/in/akshaydoingthings" target="_blank">
+    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn" height="30" width="40" style="filter: invert(29%) sepia(97%) saturate(1100%) hue-rotate(181deg) brightness(90%) contrast(97%);" />
+  </a>
+  &nbsp;
+  <!-- Twitter / X -->
+  <a href="https://twitter.com/akshaydoingthings" target="_blank">
+    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/x.svg" alt="Twitter / X" height="30" width="40" style="filter: invert(0%) sepia(0%) saturate(0%) brightness(0%) contrast(100%);" />
+  </a>
+  &nbsp;
+  <!-- Dev.to -->
+  <a href="https://dev.to/akshaydoingthings" target="_blank">
+    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/devdotto.svg" alt="Dev.to" height="30" width="40" style="filter: invert(0%) sepia(0%) saturate(0%) brightness(0%) contrast(100%);" />
+  </a>
+  &nbsp;
+  <!-- LeetCode -->
+  <a href="https://leetcode.com/akshaydoingthings" target="_blank">
+    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/leetcode.svg" alt="LeetCode" height="30" width="40" style="filter: invert(63%) sepia(81%) saturate(500%) hue-rotate(2deg) brightness(103%) contrast(101%);" />
+  </a>
 </p>
 
 <p align="center">
