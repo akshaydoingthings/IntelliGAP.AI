@@ -53,15 +53,15 @@
 
 | Feature | Description |
 |---|---|
-| 📄 **Resume Intake** | Upload `.pdf`, `.docx`, `.txt` or paste raw text |
-| 🎯 **Match Scoring** | Role-fit percentage with matched vs. gap breakdown |
-| 🔍 **5-Stage Analysis Stepper** | *Reading → Comparing → Mapping → Gaps → Roadmap* |
-| 🧪 **"What-If" Simulator** | Live skill toggle showing projected match score gains |
-| 📡 **Domain Radar Chart** | Multi-axis technical proficiency vs. job requirements |
-| 🗺️ **12-Week Roadmap** | Phased milestones: Foundations → Core → Applied → Interview |
-| 📈 **Market Demand Insights** | Historical & projected tech skill trajectories (2008–2026) |
-| 🏗️ **Capstone Blueprint** | Production-grade project spec with skills & deliverables |
-| 🌙 **Dark / Light Theme** | High-contrast dark mode & paper light mode |
+|  **Resume Intake** | Upload `.pdf`, `.docx`, `.txt` or paste raw text |
+|  **Match Scoring** | Role-fit percentage with matched vs. gap breakdown |
+|  **5-Stage Analysis Stepper** | *Reading → Comparing → Mapping → Gaps → Roadmap* |
+|  **"What-If" Simulator** | Live skill toggle showing projected match score gains |
+|  **Domain Radar Chart** | Multi-axis technical proficiency vs. job requirements |
+|  **12-Week Roadmap** | Phased milestones: Foundations → Core → Applied → Interview |
+|  **Market Demand Insights** | Historical & projected tech skill trajectories (2008–2026) |
+|  **Capstone Blueprint** | Production-grade project spec with skills & deliverables |
+|  **Dark / Light Theme** | High-contrast dark mode & paper light mode |
 
 ---
 
