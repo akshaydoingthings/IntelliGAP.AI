@@ -148,30 +148,25 @@ npm run dev
 
 ## 🤝 Connect
 
-<p align="left">
+<p align="center">
   <!-- GitHub (kept as-is) -->
   <a href="https://github.com/akshaydoingthings" target="_blank">
-    <img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="GitHub" height="30" width="40" />
+    <img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="GitHub" height="30" width="40" style="margin: 0 8px;" />
   </a>
   &nbsp;
   <!-- LinkedIn -->
-  <a href="https://linkedin.com/in/akshaydoingthings" target="_blank">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn" height="30" width="40" style="filter: invert(29%) sepia(97%) saturate(1100%) hue-rotate(181deg) brightness(90%) contrast(97%);" />
+  <a href="https://www.linkedin.com/in/akshay-kumar-a65b7136a/" target="_blank">
+    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn" height="30" width="40" style="margin: 0 8px; filter: invert(29%) sepia(97%) saturate(1100%) hue-rotate(181deg) brightness(90%) contrast(97%);" />
   </a>
   &nbsp;
-  <!-- Twitter / X -->
-  <a href="https://twitter.com/akshaydoingthings" target="_blank">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/x.svg" alt="Twitter / X" height="30" width="40" style="filter: invert(0%) sepia(0%) saturate(0%) brightness(0%) contrast(100%);" />
+  <!-- HackerRank -->
+  <a href="https://www.hackerrank.com/profile/axshaykumar" target="_blank">
+    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/hackerrank.svg" alt="HackerRank" height="30" width="40" style="margin: 0 8px; filter: invert(52%) sepia(98%) saturate(400%) hue-rotate(100deg) brightness(95%) contrast(90%);" />
   </a>
   &nbsp;
-  <!-- Dev.to -->
-  <a href="https://dev.to/akshaydoingthings" target="_blank">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/devdotto.svg" alt="Dev.to" height="30" width="40" style="filter: invert(0%) sepia(0%) saturate(0%) brightness(0%) contrast(100%);" />
-  </a>
-  &nbsp;
-  <!-- LeetCode -->
-  <a href="https://leetcode.com/akshaydoingthings" target="_blank">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/leetcode.svg" alt="LeetCode" height="30" width="40" style="filter: invert(63%) sepia(81%) saturate(500%) hue-rotate(2deg) brightness(103%) contrast(101%);" />
+  <!-- CodeChef -->
+  <a href="https://www.codechef.com/users/axshaykumar" target="_blank">
+    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/codechef.svg" alt="CodeChef" height="30" width="40" style="margin: 0 8px; filter: invert(42%) sepia(20%) saturate(600%) hue-rotate(340deg) brightness(90%) contrast(85%);" />
   </a>
 </p>
 
