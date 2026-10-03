@@ -1,9 +1,9 @@
-<h1 align="center">Hi 👋, I'm Akshay</h1>
+<h1 align="center">Hi , I'm Akshay</h1>
 <h3 align="center">Student Developer · Building AI-powered career tools 🚀</h3>
 
 <br/>
 
-<div align="right">
+<div align="center">
   <h3>Profile Views :-</h3>
   <img src="https://komarev.com/ghpvc/?username=akshaydoingthings&label=Profile%20views&color=0e75b6&style=flat" alt="akshaydoingthings" />
 </div>
@@ -14,19 +14,19 @@
 
 <ul>
   <li>
-    <p>🌱 I'm currently learning <strong>Full-Stack Development, AI/ML integrations, and developer tooling</strong></p>
+    <p> I'm currently learning <strong>Full-Stack Development, AI/ML integrations, and developer tooling</strong></p>
   </li>
   <li>
-    <p>🔭 I'm currently working on <a href="https://github.com/akshaydoingthings/IntelliGAP.AI"><strong>IntelliGAP.AI</strong></a> — an AI-powered career skill-gap analyzer &amp; roadmap engine</p>
+    <p> I'm currently working on <a href="https://github.com/akshaydoingthings/IntelliGAP.AI"><strong>IntelliGAP.AI</strong></a> — an AI-powered career skill-gap analyzer &amp; roadmap engine</p>
   </li>
   <li>
-    <p>💬 Ask me about <strong>Python, FastAPI, Vanilla JS, NLP, and resume parsing</strong></p>
+    <p> Ask me about <strong>Python, FastAPI, Vanilla JS, NLP, and resume parsing</strong></p>
   </li>
   <li>
-    <p>📫 How to reach me: open an issue or discussion on this repo!</p>
+    <p> How to reach me: open an issue or discussion on this repo!</p>
   </li>
   <li>
-    <p>⚡ Fun fact: I built a full AI career tool with <strong>zero frontend frameworks</strong> — just semantic HTML, Vanilla CSS &amp; JS.</p>
+    <p> Fun fact: I built a full AI career tool with <strong>zero frontend frameworks</strong> — just semantic HTML, Vanilla CSS &amp; JS.</p>
   </li>
 </ul>
 
@@ -34,7 +34,7 @@
 
 ---
 
-# 🚀 IntelliGAP.AI — Intelligent Skill Gap Analyzer & Career Roadmap Engine
+#  IntelliGAP.AI — Intelligent Skill Gap Analyzer & Career Roadmap Engine
 
 > An end-to-end AI developer tool that analyzes technical resumes against target job postings, computes role-fit match scores, isolates critical competency gaps, and builds actionable **12-week personalized learning roadmaps**.
 
@@ -49,23 +49,23 @@
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
 | Feature | Description |
 |---|---|
-| 📄 **Resume Intake** | Upload `.pdf`, `.docx`, `.txt` or paste raw text |
-| 🎯 **Match Scoring** | Role-fit percentage with matched vs. gap breakdown |
-| 🔍 **5-Stage Analysis Stepper** | *Reading → Comparing → Mapping → Gaps → Roadmap* |
-| 🧪 **"What-If" Simulator** | Live skill toggle showing projected match score gains |
-| 📡 **Domain Radar Chart** | Multi-axis technical proficiency vs. job requirements |
-| 🗺️ **12-Week Roadmap** | Phased milestones: Foundations → Core → Applied → Interview |
-| 📈 **Market Demand Insights** | Historical & projected tech skill trajectories (2008–2026) |
-| 🏗️ **Capstone Blueprint** | Production-grade project spec with skills & deliverables |
-| 🌙 **Dark / Light Theme** | High-contrast dark mode & paper light mode |
+|  **Resume Intake** | Upload `.pdf`, `.docx`, `.txt` or paste raw text |
+|  **Match Scoring** | Role-fit percentage with matched vs. gap breakdown |
+|  **5-Stage Analysis Stepper** | *Reading → Comparing → Mapping → Gaps → Roadmap* |
+|  **"What-If" Simulator** | Live skill toggle showing projected match score gains |
+|  **Domain Radar Chart** | Multi-axis technical proficiency vs. job requirements |
+|  **12-Week Roadmap** | Phased milestones: Foundations → Core → Applied → Interview |
+|  **Market Demand Insights** | Historical & projected tech skill trajectories (2008–2026) |
+|  **Capstone Blueprint** | Production-grade project spec with skills & deliverables |
+|  **Dark / Light Theme** | High-contrast dark mode & paper light mode |
 
 ---
 
-## 🛠️ Architecture & Tech Stack
+##  Architecture & Tech Stack
 
 ### Backend
 - **Framework**: [FastAPI](https://fastapi.tiangolo.com/) (Python 3.10+)
@@ -81,7 +81,7 @@
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```text
 skill-gap-analyzer/
@@ -109,7 +109,7 @@ skill-gap-analyzer/
 
 ---
 
-## 🚀 Quickstart
+##  Quickstart
 
 ### Prerequisites
 - Python 3.10+
@@ -146,7 +146,7 @@ npm run dev
 
 ---
 
-## 🤝 Connect
+##  Connect
 
 <p align="center">
   <!-- GitHub (kept as-is) -->

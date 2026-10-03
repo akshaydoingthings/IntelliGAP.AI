@@ -1,9 +1,4 @@
-/**
- * IntelliGap — Frontend Application Logic
- * Developer-focused skill-gap analysis, match scoring & roadmap generation.
- */
 
-// Global State
 const state = {
   analysisData: null,
   radarChart: null,
@@ -15,16 +10,14 @@ const state = {
   theme: localStorage.getItem('intelligap-theme') || 'dark',
 };
 
-// DOM Elements
+
 const elements = {
-  // Navigation & Theme
   themeToggleBtn: document.getElementById('themeToggleBtn'),
   presetSelect: document.getElementById('presetSelect'),
   resetAppBtn: document.getElementById('resetAppBtn'),
   heroAnalyzeCta: document.getElementById('heroAnalyzeCta'),
   heroDemoBtn: document.getElementById('heroDemoBtn'),
 
-  // Resume Intake
   resumeTextInput: document.getElementById('resumeTextInput'),
   resumeCharCount: document.getElementById('resumeCharCount'),
   clearResumeBtn: document.getElementById('clearResumeBtn'),
@@ -45,17 +38,14 @@ const elements = {
   parsedSkillsChips: document.getElementById('parsedSkillsChips'),
   toggleRawExtractedBtn: document.getElementById('toggleRawExtractedBtn'),
 
-  // Job Description Intake
   jobTitleInput: document.getElementById('jobTitleInput'),
   jobTextInput: document.getElementById('jobTextInput'),
   jobCharCount: document.getElementById('jobCharCount'),
   clearJobBtn: document.getElementById('clearJobBtn'),
 
-  // Primary Action
   analyzeBtn: document.getElementById('analyzeBtn'),
   analyzeSpinner: document.getElementById('analyzeSpinner'),
 
-  // Clean 5-Stage Stepper Modal
   scanModal: document.getElementById('scanModal'),
   scanModalTitle: document.getElementById('scanModalTitle'),
   scanModalSubtitle: document.getElementById('scanModalSubtitle'),
@@ -64,14 +54,12 @@ const elements = {
   scanPercentLabel: document.getElementById('scanPercentLabel'),
   scanLogBody: document.getElementById('scanLogBody'),
 
-  // Results Dashboard
   dashboardSection: document.getElementById('dashboardSection'),
   resultsRoleTitle: document.getElementById('resultsRoleTitle'),
   candidateGreeting: document.getElementById('candidateGreeting'),
   exportMarkdownBtn: document.getElementById('exportMarkdownBtn'),
   printReportBtn: document.getElementById('printReportBtn'),
 
-  // Metrics & KPI
   scoreCircle: document.getElementById('scoreCircle'),
   matchScoreVal: document.getElementById('matchScoreVal'),
   readinessBadge: document.getElementById('readinessBadge'),
@@ -84,14 +72,12 @@ const elements = {
   strategicAdviceText: document.getElementById('strategicAdviceText'),
   quickTipText: document.getElementById('quickTipText'),
 
-  // Analytics & Simulator
   radarCanvas: document.getElementById('radarChart'),
   simChipsContainer: document.getElementById('simChipsContainer'),
   simProjectedScore: document.getElementById('simProjectedScore'),
   simScoreDelta: document.getElementById('simScoreDelta'),
   resetSimBtn: document.getElementById('resetSimBtn'),
 
-  // Skill Market Context
   demandTrajectoryCard: document.getElementById('demandTrajectoryCard'),
   customSkillSearchInput: document.getElementById('customSkillSearchInput'),
   trackCustomSkillBtn: document.getElementById('trackCustomSkillBtn'),
@@ -105,7 +91,6 @@ const elements = {
   demandMetaInsight: document.getElementById('demandMetaInsight'),
   demandMetaMilestone: document.getElementById('demandMetaMilestone'),
 
-  // Matrix
   matrixTabs: document.getElementById('matrixTabs'),
   matrixGrid: document.getElementById('matrixGrid'),
   tabCritCount: document.getElementById('tabCritCount'),
@@ -113,18 +98,16 @@ const elements = {
   tabMatchCount: document.getElementById('tabMatchCount'),
   tabExtraCount: document.getElementById('tabExtraCount'),
 
-  // Roadmap & Capstone
   timelineContainer: document.getElementById('timelineContainer'),
   capstoneTitle: document.getElementById('capstoneTitle'),
   capstoneDesc: document.getElementById('capstoneDesc'),
   capstoneDeliverablesList: document.getElementById('capstoneDeliverablesList'),
   viewProjectPlanBtn: document.getElementById('viewProjectPlanBtn'),
 
-  // Toast
   toastContainer: document.getElementById('toastContainer')
 };
 
-// Application Initialization
+
 document.addEventListener('DOMContentLoaded', () => {
   applyTheme(state.theme);
   setupEventListeners();
@@ -132,15 +115,13 @@ document.addEventListener('DOMContentLoaded', () => {
   setupCharCounters();
   setupDropzone();
 
-  // Load default demo preset on first load if inputs empty
   if (!elements.resumeTextInput.value.trim()) {
     loadPreset('frontend_to_fullstack');
   }
 });
 
-// Event Listeners
+
 function setupEventListeners() {
-  // Theme Toggle
   elements.themeToggleBtn.addEventListener('click', () => {
     state.theme = state.theme === 'dark' ? 'light' : 'dark';
     localStorage.setItem('intelligap-theme', state.theme);
@@ -151,7 +132,6 @@ function setupEventListeners() {
     }
   });
 
-  // Hero CTAs
   if (elements.heroDemoBtn) {
     elements.heroDemoBtn.addEventListener('click', () => {
       loadPreset('frontend_to_fullstack');
@@ -160,14 +140,12 @@ function setupEventListeners() {
     });
   }
 
-  // Presets
   elements.presetSelect.addEventListener('change', (e) => {
     if (e.target.value) {
       loadPreset(e.target.value);
     }
   });
 
-  // Clear Buttons
   elements.clearResumeBtn.addEventListener('click', () => {
     elements.resumeTextInput.value = '';
     updateCharCounts();
@@ -180,16 +158,12 @@ function setupEventListeners() {
 
   elements.resetAppBtn.addEventListener('click', resetAll);
 
-  // File Upload
   elements.resumeFileInput.addEventListener('change', handleFileUpload);
 
-  // Analysis Execution
   elements.analyzeBtn.addEventListener('click', executeAnalysis);
 
-  // Simulator Reset
   elements.resetSimBtn.addEventListener('click', resetSimulator);
 
-  // Market Demand Search
   if (elements.trackCustomSkillBtn && elements.customSkillSearchInput) {
     elements.trackCustomSkillBtn.addEventListener('click', () => {
       const q = elements.customSkillSearchInput.value.trim();
@@ -205,7 +179,6 @@ function setupEventListeners() {
     });
   }
 
-  // Matrix Filter Tabs
   elements.matrixTabs.addEventListener('click', (e) => {
     const tabBtn = e.target.closest('.matrix-tab');
     if (tabBtn) {
@@ -216,7 +189,6 @@ function setupEventListeners() {
     }
   });
 
-  // Capstone Plan Scroll CTA
   if (elements.viewProjectPlanBtn) {
     elements.viewProjectPlanBtn.addEventListener('click', () => {
       if (elements.timelineContainer) {
@@ -225,7 +197,6 @@ function setupEventListeners() {
     });
   }
 
-  // Export & Print
   elements.exportMarkdownBtn.addEventListener('click', downloadMarkdownRoadmap);
   elements.printReportBtn.addEventListener('click', () => window.print());
 }
@@ -263,7 +234,7 @@ function resetAll() {
   showToast('Reset input fields.', 'info');
 }
 
-// Drag & Drop
+
 function setupDropzone() {
   ['dragenter', 'dragover'].forEach(eventName => {
     elements.dropzone.addEventListener(eventName, (e) => {
@@ -321,7 +292,7 @@ async function processResumeFile(file) {
     const data = await response.json();
     elements.resumeTextInput.value = data.raw_text;
     updateCharCounts();
-    elements.dropzoneText.textContent = `✓ Uploaded: ${file.name}`;
+    elements.dropzoneText.textContent = `Uploaded: ${file.name}`;
 
     const skillsList = Object.keys(data.skills || {});
     updateParsedSection(
@@ -338,7 +309,6 @@ async function processResumeFile(file) {
   }
 }
 
-// Preset Loader
 async function loadPreset(presetId) {
   try {
     const response = await fetch(`/api/presets/${presetId}`);
@@ -366,7 +336,7 @@ async function loadPreset(presetId) {
   }
 }
 
-// Clean 5-Stage Stepper Progress Simulation
+
 async function runScanningSimulation() {
   if (!elements.scanModal) return;
 
@@ -387,7 +357,6 @@ async function runScanningSimulation() {
   for (let i = 0; i < steps.length; i++) {
     const s = steps[i];
 
-    // Highlight stepper items cleanly
     stepperItems.forEach((item, idx) => {
       item.classList.remove('active');
       if (idx < i) {
@@ -410,7 +379,6 @@ async function runScanningSimulation() {
   elements.scanModal.classList.add('hidden');
 }
 
-// Execute Analysis
 async function executeAnalysis() {
   const resumeText = elements.resumeTextInput.value.trim();
   const jobText = elements.jobTextInput.value.trim();
@@ -470,7 +438,7 @@ async function executeAnalysis() {
   }
 }
 
-// Render Results Dashboard
+
 function renderDashboard(data) {
   const { candidate, job, gap_analysis, roadmap } = data;
 
@@ -480,7 +448,6 @@ function renderDashboard(data) {
   const score = gap_analysis.overall_match_score;
   animateScoreDial(score);
 
-  // Status & Dynamic Alignment Narrative
   elements.readinessBadge.textContent = getAlignmentHeadline(score, gap_analysis.readiness);
   elements.readinessBadge.className = `score-status`;
 
@@ -514,14 +481,12 @@ function getAlignmentHeadline(score, readiness) {
   return 'Early-stage alignment — significant gaps to close';
 }
 
-// Animate Circular Score Dial
 function animateScoreDial(targetScore) {
-  const circumference = 2 * Math.PI * 58; // r = 58
+  const circumference = 2 * Math.PI * 58;
   const offset = circumference - (targetScore / 100) * circumference;
 
   elements.scoreCircle.style.strokeDashoffset = offset;
 
-  // Clean, restrained semantic stroke colors
   if (targetScore >= 80) {
     elements.scoreCircle.style.stroke = 'var(--color-matched)';
   } else if (targetScore >= 60) {
@@ -544,7 +509,6 @@ function animateScoreDial(targetScore) {
   }, 20);
 }
 
-// Radar Chart (Clean Developer Tool Palette)
 function renderRadarChart() {
   if (!state.analysisData) return;
   const radarData = state.analysisData.gap_analysis.radar_chart_data;
@@ -621,7 +585,6 @@ function renderRadarChart() {
   });
 }
 
-// "What-If" Simulator
 function setupSimulator() {
   const { gap_analysis } = state.analysisData;
   const missingSkills = [...gap_analysis.critical_gaps, ...gap_analysis.secondary_gaps];
@@ -658,7 +621,7 @@ async function toggleSimulatedSkill(skillName, chipElement) {
   } else {
     state.simulatedSkills.add(skillName);
     chipElement.classList.add('active');
-    chipElement.textContent = `✓ ${skillName}`;
+    chipElement.textContent = `${skillName}`;
   }
 
   const currentSkills = Object.keys(state.analysisData.candidate.skills);
@@ -714,7 +677,6 @@ function resetSimulator() {
   elements.simScoreDelta.style.borderColor = 'var(--border-subtle)';
 }
 
-// Render Skill Gap Matrix Cards
 function renderMatrixCards() {
   if (!state.analysisData) return;
   const { gap_analysis } = state.analysisData;
@@ -772,7 +734,6 @@ function renderMatrixCards() {
   });
 }
 
-// 12-Week Roadmap Rendering (Horizontal on Desktop, Vertical on Mobile)
 function renderRoadmapTimeline(roadmap) {
   const container = elements.timelineContainer;
   container.innerHTML = '';
@@ -850,7 +811,6 @@ function renderRoadmapTimeline(roadmap) {
   });
 }
 
-// Capstone Project Rendering
 function renderCapstone(capstone) {
   if (!capstone) return;
   elements.capstoneTitle.textContent = capstone.title || 'Full-Stack Capstone Project';
@@ -861,7 +821,6 @@ function renderCapstone(capstone) {
   `).join('');
 }
 
-// Skill Market Context (Historical & Future Demand)
 function setupDemandTrajectory(data) {
   if (!elements.demandTrajectoryCard) return;
 
@@ -1033,7 +992,6 @@ function renderDemandLineChart(data) {
   });
 }
 
-// Markdown Export
 function downloadMarkdownRoadmap() {
   if (!state.analysisData || !state.analysisData.markdown_roadmap) {
     showToast('No roadmap data to export.', 'error');
@@ -1053,12 +1011,11 @@ function downloadMarkdownRoadmap() {
   showToast('Roadmap exported as Markdown.', 'success');
 }
 
-// Toast Notifications
 function showToast(message, type = 'info') {
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
 
-  const icon = type === 'success' ? '✓' : type === 'error' ? '!' : '•';
+  const icon = type === 'success' ? '' : type === 'error' ? '!' : '';
   toast.innerHTML = `<span style="font-weight:700">${icon}</span> <span>${message}</span>`;
 
   elements.toastContainer.appendChild(toast);
@@ -1071,7 +1028,6 @@ function showToast(message, type = 'info') {
   }, 3200);
 }
 
-// CV Intake Mode Tabs
 function setupCvIntakeTabs() {
   if (elements.cvTabUpload && elements.cvTabPaste) {
     elements.cvTabUpload.addEventListener('click', () => {
@@ -1141,7 +1097,6 @@ function extractQuickSkills(text) {
   });
 }
 
-// AI Strategy & Deep Dive Panel (Clean, Restrained)
 const aiElements = {
   careerAdviceBtn: document.getElementById('aiCareerAdviceBtn'),
   roadmapBtn: document.getElementById('aiRoadmapBtn'),
